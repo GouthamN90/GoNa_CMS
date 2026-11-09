@@ -1,0 +1,129 @@
+.gona-component-card {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    display: flex;
+    flex-direction: column;
+    max-width: 340px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.gona-component-card:hover {
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
+}
+
+.component-card-preview {
+    position: relative;
+    background-color: #f3f4f6;
+    height: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.component-card-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.component-type-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background-color: #059669;
+    color: #ffffff;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    letter-spacing: 0.2px;
+    z-index: 2;
+}
+
+.component-no-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #9ca3af;
+    gap: 8px;
+}
+
+.component-no-image svg {
+    width: 36px;
+    height: 36px;
+    stroke: #9ca3af;
+}
+
+.component-no-image span {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.component-card-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+}
+
+.component-uid-tag {
+    display: inline-block;
+    align-self: flex-start;
+    background-color: #f3f4f6;
+    color: #4b5563;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.78rem;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    word-break: break-all;
+}
+
+.component-card-title {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #111827;
+    line-height: 1.4;
+}
+
+.component-card-divider {
+    height: 1px;
+    background-color: #e5e7eb;
+    margin: 20px 0 16px 0;
+    border: none;
+}
+
+.component-create-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background-color: #0f172a;
+    color: #ffffff;
+    font-size: 0.92rem;
+    font-weight: 600;
+    padding: 11px 16px;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: background-color 0.15s ease;
+}
+
+.component-create-btn:hover {
+    background-color: #1e293b;
+    color: #ffffff;
+}

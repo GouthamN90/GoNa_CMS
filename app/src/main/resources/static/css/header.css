@@ -1,0 +1,212 @@
+:root {
+    --header-bg: #ffffff;
+    --header-border: #e5e7eb;
+    --text-primary: #111827;
+    --text-secondary: #4b5563;
+    --text-danger: #dc2626;
+    --bg-hover: #f3f4f6;
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.gona-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    padding: 0 24px;
+    background-color: var(--header-bg);
+    border-bottom: 1px solid var(--header-border);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.header-logo {
+    height: 48px;
+    max-width: 120px;
+    object-fit: contain;
+    display: block;
+    transition: transform 0.2s ease;
+}
+
+.header-logo:hover {
+    transform: scale(1.03);
+}
+
+.logo-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    width: 44px;
+    background-color: #111827;
+    color: #ffffff;
+    font-weight: bold;
+    border-radius: 8px;
+    font-size: 1.1rem;
+}
+
+.header-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+/* Dropdown Component Wrapper */
+.user-profile-menu {
+    position: relative;
+    display: inline-block;
+}
+
+.menu-trigger {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    border: 1px solid var(--header-border);
+    padding: 6px 14px;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.menu-trigger:hover, .menu-trigger:focus {
+    background-color: var(--bg-hover);
+    border-color: #9ca3af;
+}
+
+.avatar-icon {
+    width: 20px;
+    height: 20px;
+    color: var(--text-secondary);
+}
+
+.user-display-name {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.dropdown-chevron {
+    width: 14px;
+    height: 14px;
+    color: var(--text-secondary);
+    transition: transform 0.2s ease;
+}
+
+.user-profile-menu.open .dropdown-chevron {
+    transform: rotate(180deg);
+}
+
+/* Dropdown Items Menu Block */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    background-color: #ffffff;
+    min-width: 220px;
+    border: 1px solid var(--header-border);
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+    z-index: 1000;
+    overflow: hidden;
+    animation: fadeIn 0.15s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.user-profile-menu.open .dropdown-content {
+    display: block;
+}
+
+.dropdown-header {
+    padding: 14px 18px;
+    background-color: #f9fafb;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.user-role {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #9ca3af;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+}
+
+.user-name-display {
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.dropdown-divider {
+    height: 1px;
+    background-color: var(--header-border);
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 18px;
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.dropdown-item:hover {
+    background-color: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+.item-icon {
+    width: 16px;
+    height: 16px;
+    color: #9ca3af;
+    transition: color 0.15s ease;
+}
+
+.dropdown-item:hover .item-icon {
+    color: var(--text-primary);
+}
+
+.signout-item {
+    color: var(--text-danger);
+}
+
+.signout-item:hover {
+    background-color: #fef2f2;
+    color: var(--text-danger);
+}
+
+.signout-item:hover .item-icon {
+    color: var(--text-danger);
+}

@@ -1,0 +1,31 @@
+.gona-alert-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+.success-msg {
+    display: flex;
+    align-items: center;
+    padding: 10px 14px;
+    border-radius: 6px;
+    background-color: #d1e7dd;
+    color: #0f5132;
+    border: 1px solid #badbcc;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.error-msg {
+    display: flex;
+    align-items: center;
+    padding: 10px 14px;
+    border-radius: 6px;
+    background-color: #f8d7da;
+    color: #842029;
+    border: 1px solid #f5c2c7;
+    font-size: 0.9rem;
+    font-weight: 500;
+}

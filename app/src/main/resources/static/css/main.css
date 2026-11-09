@@ -1,0 +1,77 @@
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f4f4f9;
+}
+
+/* .container {
+	background: #fff;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	max-width: 500px;
+}
+
+h1 {
+	color: #333;
+}
+
+.highlight {
+	color: #0066cc;
+	font-weight: bold;
+}
+
+.footer {
+	margin-top: 20px;
+	font-size: 0.8em;
+	color: #666;
+	border-top: 1px solid #ccc;
+	padding-top: 10px;
+} */
+
+.app-wrapper {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+/* Flexbox body container to arrange Sidebar left and Content right */
+.app-body {
+	display: flex;
+	flex: 1;
+}
+
+.app-navbar {
+	padding: 30px;
+	background-color: #f9f9f9;
+}
+
+/* Right-hand side dynamic viewport content */
+.app-content {
+	flex: 1;
+	padding: 30px;
+	background-color: #f9f9f9;
+	box-sizing: border-box;
+	overflow-y: auto;
+}
+
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status-badge-green {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.status-badge-red {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.status-badge-yellow {
+  background-color: #fef9c3;
+  color: #854d0e;
+}

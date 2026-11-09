@@ -1,0 +1,35 @@
+/* ---------------------------------------------------- */
+/* EMPTY STATE WINDOW ELEMENTS (Matches Image Layout)    */
+/* ---------------------------------------------------- */
+.empty-state-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 24px;
+    text-align: center;
+    background-color: #ffffff;
+}
+
+/* Light silver icon stroke resizing */
+.empty-icon {
+    width: 48px;
+    height: 48px;
+    color: #cbd5e1; /* Soft silver grey stroke tint */
+    margin-bottom: 16px;
+}
+
+/* Bold dark slate message element */
+.empty-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #334155;
+    margin: 0 0 6px 0;
+}
+
+/* Light descriptive message text cells */
+.empty-subtitle {
+    font-size: 14px;
+    color: #94a3b8; /* Muted subtitle grey color */
+    margin: 0;
+}

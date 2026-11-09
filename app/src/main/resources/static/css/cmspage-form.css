@@ -1,0 +1,99 @@
+.gona-cmspage-form .form-container {
+    margin: 0 auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #333;
+    box-sizing: border-box;
+}
+
+.gona-cmspage-form h2 {
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+    margin-top: 0;
+    color: #007bff;
+}
+
+.gona-cmspage-form .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.gona-cmspage-form .form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.gona-cmspage-form .form-group.full-width {
+    grid-column: span 2;
+}
+
+.gona-cmspage-form label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+}
+
+.gona-cmspage-form input[type="text"],
+.gona-cmspage-form input[type="number"],
+.gona-cmspage-form input[type="date"],
+.gona-cmspage-form select,
+.gona-cmspage-form textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.gona-cmspage-form textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.gona-cmspage-form input:focus,
+.gona-cmspage-form select:focus,
+.gona-cmspage-form textarea:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
+
+.gona-cmspage-form .error-msg {
+    color: #dc3545;
+    font-size: 0.85rem;
+    margin-top: 4px;
+    font-weight: bold;
+    display: block;
+}
+
+.gona-cmspage-form .dimensions-group {
+    display: flex;
+    gap: 10px;
+}
+
+.gona-cmspage-form .btn-container {
+    margin-top: 30px;
+    text-align: right;
+}
+
+.gona-cmspage-form .btn-submit {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.gona-cmspage-form .btn-submit:hover {
+    background-color: #0056b3;
+}
