@@ -1,0 +1,135 @@
+<header class="header">
+  <!-- Top Bar: Logo & Hamburger -->
+  <div class="top-bar">
+    <button
+      class="hamburger-btn"
+      type="button"
+      (click)="toggleMobileNav()"
+      [attr.aria-expanded]="isMobileMenuOpen"
+      aria-label="Toggle navigation menu"
+    >
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+
+    <div class="brand-container">
+      <a routerLink="/" class="brand-link" (click)="closeAllDropdowns()">
+        <img
+          src={{imageUrl}}
+          alt="NA&H - Manufacturers Since 1950's"
+          class="logo-img"
+        />
+      </a>
+      <span class="tagline">{{tagline}}</span>
+    </div>
+  </div>
+
+  <!-- Desktop Navigation Bar -->
+  <nav class="desktop-nav" aria-label="Desktop Navigation">
+    <ul class="desktop-menu">
+      <li
+        *ngFor="let item of navItems; let i = index"
+        class="nav-item"
+        [class.has-dropdown]="item.children && item.children.length > 0"
+        [class.is-open]="openDesktopIndex === i"
+      >
+        <!-- Item WITH Sub-menu: Click button toggle -->
+        <button
+          *ngIf="item.children && item.children.length > 0"
+          type="button"
+          class="nav-btn"
+          [attr.aria-expanded]="openDesktopIndex === i"
+          (click)="toggleDesktopMenu(i, $event)"
+        >
+          <span>{{ item.label }}</span>
+          <svg class="chevron-icon" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.25a.75.75 0 01-1.06 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+          </svg>
+        </button>
+
+        <!-- Standard Direct Link (No Sub-menu) -->
+        <a
+          *ngIf="!item.children || item.children.length === 0"
+          [routerLink]="item.link"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: item.link === '/' }"
+          (click)="closeAllDropdowns()"
+        >
+          {{ item.label }}
+        </a>
+
+        <!-- Desktop Dropdown Menu Panel -->
+        <ul *ngIf="item.children && item.children.length > 0" class="desktop-dropdown">
+          <li *ngFor="let subItem of item.children">
+            <a
+              [routerLink]="subItem.link"
+              routerLinkActive="active"
+              (click)="closeAllDropdowns()"
+            >
+              {{ subItem.label }}
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Mobile Drawer Backdrop Overlay -->
+  <div
+    class="mobile-backdrop"
+    [class.active]="isMobileMenuOpen"
+    (click)="closeMobileNav()"
+  ></div>
+
+  <!-- Mobile Drawer Menu -->
+  <nav
+    class="mobile-drawer"
+    [class.open]="isMobileMenuOpen"
+    aria-label="Mobile Navigation"
+  >
+    <ul class="mobile-menu">
+      <li *ngFor="let item of navItems; let i = index" class="mobile-item">
+        <!-- Mobile item WITH Sub-menu (Accordion toggle) -->
+        <ng-container *ngIf="item.children && item.children.length > 0">
+          <button
+            type="button"
+            class="mobile-toggle-btn"
+            [class.expanded]="openMobileIndex === i"
+            (click)="toggleMobileMenuAccordion(i)"
+          >
+            <span>{{ item.label }}</span>
+            <svg class="mobile-chevron" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.25a.75.75 0 01-1.06 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+            </svg>
+          </button>
+
+          <!-- Accordion Content -->
+          <ul class="mobile-submenu" [class.open]="openMobileIndex === i">
+            <li *ngFor="let subItem of item.children">
+              <a
+                [routerLink]="subItem.link"
+                routerLinkActive="active"
+                (click)="closeMobileNav()"
+              >
+                {{ subItem.label }}
+              </a>
+            </li>
+          </ul>
+        </ng-container>
+
+        <!-- Mobile Direct Link (No Sub-menu) -->
+        <ng-container *ngIf="!item.children || item.children.length === 0">
+          <a
+            [routerLink]="item.link"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: item.link === '/' }"
+            (click)="closeMobileNav()"
+          >
+            {{ item.label }}
+          </a>
+        </ng-container>
+      </li>
+    </ul>
+  </nav>
+</header>

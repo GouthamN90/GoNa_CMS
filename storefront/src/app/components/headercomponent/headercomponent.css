@@ -1,0 +1,338 @@
+:host {
+  display: block;
+  width: 100%;
+  font-family: 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+}
+
+/* ===============================
+   TOP LOGO SECTION
+================================== */
+.top-bar {
+  position: relative;
+  background-color: #ffffff;
+  padding: 16px 20px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.brand-link {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.logo-img {
+  height: 60px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.tagline {
+  margin-top: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2.2px;
+  color: #333333;
+  text-transform: uppercase;
+}
+
+/* Mobile Hamburger */
+.hamburger-btn {
+  display: none;
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.hamburger-btn .bar {
+  width: 22px;
+  height: 2px;
+  background-color: #222222;
+  transition: transform 0.2s ease;
+}
+
+/* ===============================
+   DESKTOP NAVIGATION
+================================== */
+.desktop-nav {
+  background-color: #000000;
+  width: 100%;
+  position: relative;
+  z-index: 100;
+}
+
+.desktop-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.desktop-menu .nav-item {
+  position: relative;
+  border-left: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.desktop-menu .nav-item a,
+.desktop-menu .nav-item .nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 100%;
+  padding: 14px 18px;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.desktop-menu .nav-item a:hover,
+.desktop-menu .nav-item .nav-btn:hover,
+.desktop-menu .nav-item.is-open .nav-btn,
+.desktop-menu .nav-item a.active {
+  background-color: #1a1a1a;
+  color: #c7c6c3;
+}
+
+.chevron-icon {
+  width: 15px;
+  height: 15px;
+  transition: transform 0.25s ease;
+}
+
+.nav-item.is-open .chevron-icon {
+  transform: rotate(180deg);
+}
+
+/* Desktop Dropdown Menu */
+.desktop-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 220px;
+  background-color: #0f0f0f;
+  border-top: 2px solid #cbb279;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
+  list-style: none;
+  margin: 0;
+  padding: 6px 0;
+  display: none;
+  z-index: 150;
+  animation: fadeInDown 0.2s ease;
+}
+
+.desktop-menu .nav-item.is-open .desktop-dropdown {
+  display: block;
+}
+
+.desktop-dropdown li {
+  width: 100%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.desktop-dropdown li:last-child {
+  border-bottom: none;
+}
+
+.desktop-dropdown li a {
+  display: block;
+  padding: 11px 20px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #d1d1d1;
+  text-decoration: none;
+  transition: background-color 0.2s, color 0.2s, padding-left 0.2s;
+}
+
+.desktop-dropdown li a:hover,
+.desktop-dropdown li a.active {
+  background-color: #1c1c1c;
+  color: #ffffff;
+  padding-left: 24px;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===============================
+   MOBILE DRAWER NAVIGATION
+================================== */
+.mobile-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.65);
+  z-index: 998;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.mobile-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobile-drawer {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 280px;
+  max-width: 82vw;
+  background-color: #ffffff;
+  z-index: 999;
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 4px 0 16px rgba(0, 0, 0, 0.15);
+  overflow-y: auto;
+}
+
+.mobile-drawer.open {
+  transform: translateX(0);
+}
+
+.mobile-menu {
+  list-style: none;
+  margin: 0;
+  padding: 12px 0 30px;
+}
+
+.mobile-item {
+  border-bottom: 1px solid #eeeeee;
+}
+
+.mobile-item a,
+.mobile-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 15px 22px;
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  color: #2b2b2b;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-align: left;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.mobile-item a:hover,
+.mobile-toggle-btn:hover {
+  background-color: #f7f7f7;
+}
+
+.mobile-item a.active,
+.mobile-toggle-btn.expanded {
+  color: #8c6d46;
+}
+
+.mobile-chevron {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.25s ease;
+}
+
+.mobile-toggle-btn.expanded .mobile-chevron {
+  transform: rotate(180deg);
+}
+
+/* Mobile Accordion Sub-menu */
+.mobile-submenu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background-color: #fafafa;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.mobile-submenu.open {
+  max-height: 400px;
+}
+
+.mobile-submenu li {
+  border-top: 1px solid #f0f0f0;
+}
+
+.mobile-submenu li a {
+  padding: 12px 22px 12px 36px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #555555;
+  text-transform: none;
+}
+
+.mobile-submenu li a:hover,
+.mobile-submenu li a.active {
+  background-color: #f0f0f0;
+  color: #8c6d46;
+}
+
+/* ===============================
+   RESPONSIVE BREAKPOINT
+================================== */
+@media screen and (max-width: 992px) {
+  .desktop-nav {
+    display: none;
+  }
+
+  .hamburger-btn {
+    display: flex;
+  }
+
+  .mobile-drawer,
+  .mobile-backdrop {
+    display: block;
+  }
+
+  .logo-img {
+    height: 50px;
+  }
+
+  .tagline {
+    font-size: 9px;
+  }
+}
