@@ -32,7 +32,7 @@
     
     <!-- Dropdown: Templates -->
     <c:if test="${not empty templates}">
-	    <select name="template" class="filter-select">
+	    <select name="selectedTemplate" class="filter-select">
 	        <option value="">All Templates</option>
 	        <c:forEach items="${templates}" var="temp">
 	        	<option value="${temp}" <c:if test="${temp == selectedTemplate}">selected</c:if>>${temp}</option>

@@ -75,5 +75,6 @@
 		</div>
     </div>
     <!-- Pagination Controller Bar -->
-    <tag:pagination actionUrl="${searchActionUrl}" pagination="${pagination}" searchQuery="${searchQuery}" statusFilter="${statusFilter}" sortBy="${pagination.sortBy}" sortDir="${pagination.sortDir}" />
+    <tag:pagination actionUrl="${searchActionUrl}" pagination="${pagination}" searchQuery="${searchQuery}" statusFilter="${statusFilter}" 
+    	sortBy="${pagination.sortBy}" sortDir="${pagination.sortDir}" />
 </div>

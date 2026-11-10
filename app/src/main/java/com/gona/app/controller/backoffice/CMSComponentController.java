@@ -84,7 +84,7 @@ public class CMSComponentController {
 	
 	
 	@PostMapping("/clone_component")
-	public String editComponent(
+	public String cloneDefaultComponent(
             @Valid @ModelAttribute("cloneComponentForm") CloneComponentForm form,
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes) {

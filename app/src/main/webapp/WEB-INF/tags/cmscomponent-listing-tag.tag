@@ -36,16 +36,14 @@
     <div class="table-body">
         <c:choose>
             <c:when test="${not empty listComponents}">
-                <%-- If data exists, loop over items --%>
                 
                 <c:forEach var="item" items="${listComponents}">
                     <tag:cmscomponent-card 
-						componentType="${item.componentType}" 
+						template="${item.template}" 
 						uid="${item.uid}" 
-						title="${item.title}" 
-						imageUrl="${item.imageUrl}" 
-						actionUrl="${item.actionUrl}" 
-						buttonText="${item.buttonText}" />
+						name="${item.name}" 
+						imageUrl="${item.previewImgUrl}" 
+						itemId="${item.id}"/>
                 </c:forEach>
             </c:when>
             
@@ -54,4 +52,7 @@
             </c:otherwise>
         </c:choose>
     </div>
+    
+    <tag:pagination actionUrl="${searchActionUrl}" pagination="${pagination}" searchQuery="${searchQuery}" 
+    	statusFilter="${statusFilter}" sortBy="${pagination.sortBy}" sortDir="${pagination.sortDir}" selectedTemplate="${selectedTemplate }"/>
 </div>

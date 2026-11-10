@@ -13,7 +13,7 @@ public class GoNaConstants {
 	
 	public static final String SELECT_DEFAULT_COMPONENT_PAGE = "select_defaultcomponent-listing-page";
 
-	public static final String CMSCOMPONENT_FORM_PAGE = "component-form-page";
+	public static final String CMSCOMPONENT_FORM_PAGE = "cmscomponent-createupdate-page";
 	
 	public static final String CMSCOMPONENT_LISTING_PAGE = "cmscomponent-listing-page";
 	
@@ -24,7 +24,7 @@ public class GoNaConstants {
 	public static final String IMAGE_UPLOAD_URL = "/images/";
 	
 	public static final Map<String, String> COMPONENT_TEMPLATE_FORM_MAP = Map.of(
-	        "BannerComponent", "bannercomponent/banner-component-form"
+	        "BannerComponent", "banner-component-form"
 	);
 
 }

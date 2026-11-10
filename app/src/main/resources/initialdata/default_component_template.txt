@@ -1,0 +1,17 @@
+START TRANSACTION;
+
+INSERT INTO cmscomponents
+    (uid, name, template, preview_img_url, default_template, approval_status, component_type)
+VALUES
+    ('default_banner_component', 'Default Banner Component', 'BannerComponent',
+     '/images/default_bannercomponent.png', 1, 'Show', 'BANNER');
+
+SET @component_id = LAST_INSERT_ID();
+
+INSERT INTO banner_components
+    (id, image_url, cta_link, banner_text)
+VALUES
+    (@component_id, 'default_bannercomponent.png', '/',
+     'Default banner component description');
+
+COMMIT;

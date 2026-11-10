@@ -7,6 +7,7 @@
 <%@ attribute name="sortBy" type="java.lang.String" required="false" rtexprvalue="true" description="Sort field parameter" %>
 <%@ attribute name="sortDir" type="java.lang.String" required="false" rtexprvalue="true" description="Sort direction parameter" %>
 <%@ attribute name="actionUrl" type="java.lang.String" required="false" rtexprvalue="true" description="Target URL parameter" %>
+<%@ attribute name="selectedTemplate" type="java.lang.String" required="false" rtexprvalue="true" description="Selected template filter parameter" %>
 
 <!-- Externalized Pagination Stylesheet -->
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/pagination.css' />" />
@@ -42,6 +43,7 @@
                 <c:if test="${not empty statusFilter}"><c:param name="status" value="${statusFilter}" /></c:if>
                 <c:if test="${not empty sortBy}"><c:param name="sortBy" value="${sortBy}" /></c:if>
                 <c:if test="${not empty sortDir}"><c:param name="sortDir" value="${sortDir}" /></c:if>
+                <c:if test="${not empty selectedTemplate}"><c:param name="selectedTemplate" value="${selectedTemplate}" /></c:if>
             </c:url>
             <a href="${prevUrl}" 
                class="gona-pagination-btn ${pagination.currentPage <= 0 ? 'disabled' : ''}" 
@@ -60,6 +62,7 @@
                     <c:if test="${not empty statusFilter}"><c:param name="status" value="${statusFilter}" /></c:if>
                     <c:if test="${not empty sortBy}"><c:param name="sortBy" value="${sortBy}" /></c:if>
                     <c:if test="${not empty sortDir}"><c:param name="sortDir" value="${sortDir}" /></c:if>
+                    <c:if test="${not empty selectedTemplate}"><c:param name="selectedTemplate" value="${selectedTemplate}" /></c:if>
                 </c:url>
                 <a href="${pageUrl}" 
                    class="gona-pagination-btn ${pageIdx == pagination.currentPage ? 'active' : ''}">
@@ -75,6 +78,7 @@
                 <c:if test="${not empty statusFilter}"><c:param name="status" value="${statusFilter}" /></c:if>
                 <c:if test="${not empty sortBy}"><c:param name="sortBy" value="${sortBy}" /></c:if>
                 <c:if test="${not empty sortDir}"><c:param name="sortDir" value="${sortDir}" /></c:if>
+                <c:if test="${not empty selectedTemplate}"><c:param name="selectedTemplate" value="${selectedTemplate}" /></c:if>
             </c:url>
             <a href="${nextUrl}" 
                class="gona-pagination-btn ${pagination.currentPage >= pagination.totalPages - 1 ? 'disabled' : ''}" 
