@@ -1,6 +1,7 @@
 package com.gona.app.form;
 
 import com.gona.app.model.ApprovalStatus;
+import com.gona.app.model.CMSVersion;
 
 import jakarta.validation.constraints.NotBlank;
 
@@ -13,6 +14,8 @@ public class PageForm {
 
 	@NotBlank(message = "name is required")
     private String name;
+	
+	private CMSVersion version;
 
     private String title;
 
@@ -66,6 +69,14 @@ public class PageForm {
 
 	public void setApprovalStatus(ApprovalStatus approvalStatus) {
 		this.approvalStatus = approvalStatus;
+	}
+
+	public CMSVersion getVersion() {
+		return version;
+	}
+
+	public void setVersion(CMSVersion version) {
+		this.version = version;
 	}
 
 }

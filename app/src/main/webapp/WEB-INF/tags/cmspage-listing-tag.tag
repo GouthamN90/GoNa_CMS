@@ -1,13 +1,6 @@
 <%@ tag language="java" pageEncoding="UTF-8" description="GoNa Backoffice Page Catalog Listing Component" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tag" tagdir="/WEB-INF/tags" %>
-<%@ attribute name="listPages" type="java.util.Collection" required="false" rtexprvalue="true" description="List of bopage entities" %>
-<%@ attribute name="approvalStatus" type="java.util.Collection" required="false" rtexprvalue="true" description="List of approval statuses for filtering" %>
-<%@ attribute name="statusFilter" type="java.lang.String" required="false" rtexprvalue="true" description="Currently selected status filter" %>
-<%@ attribute name="sortBy" type="java.util.Collection" required="false" rtexprvalue="true" description="Sort by field options" %>
-<%@ attribute name="sortOrder" type="java.util.Collection" required="false" rtexprvalue="true" description="Sort direction options" %>
-<%@ attribute name="searchQuery" type="java.lang.String" required="false" rtexprvalue="true" description="Current search keyword query" %>
-<%@ attribute name="pagination" type="java.lang.Object" required="false" rtexprvalue="true" description="Pagination metadata object" %>
 
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/cmspage-listing.css' />" />
 
@@ -33,6 +26,7 @@
 		        <div class="col-name">Name</div>
 		        <div class="col-uid">UID</div>
 		        <div class="col-status">Status</div>
+		        <div class="col-status">Version</div>
 		    </div>
 		
 		    <!-- 2. Table Body Content Area -->
@@ -63,6 +57,17 @@
 	                                </c:choose>
 		                            <span class="status-badge ${badgeClass}">${item.approvalStatus}</span>
 		                        </div>
+		                        <div class="col-status">
+		                        	<c:choose>
+	                                    <c:when test="${item.version == 'Online'}">
+	                                        <c:set var="badgeVersionClass" value="status-badge-green" />
+	                                    </c:when>
+	                                    <c:otherwise>
+	                                        <c:set var="badgeVersionClass" value="status-badge-yellow" />
+	                                    </c:otherwise>
+	                                </c:choose>
+		                            <span class="status-badge ${badgeVersionClass}">${item.version}</span>
+		                        </div>
 		                    </div>
 		                </c:forEach>
 		            </c:when>
@@ -76,5 +81,5 @@
     </div>
     <!-- Pagination Controller Bar -->
     <tag:pagination actionUrl="${searchActionUrl}" pagination="${pagination}" searchQuery="${searchQuery}" statusFilter="${statusFilter}" 
-    	sortBy="${pagination.sortBy}" sortDir="${pagination.sortDir}" />
+    	sortBy="${pagination.sortBy}" sortDir="${pagination.sortDir}" selectedVersion="${selectedVersion}" />
 </div>

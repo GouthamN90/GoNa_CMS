@@ -52,6 +52,28 @@
     color: #ffffff;
 }
 
+.btn-sync {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #198754;
+	color: #ffffff;
+	border: none;
+	border-radius: 6px;
+	padding: 8px 18px;
+	font-size: 0.95rem;
+	font-weight: 600;
+	text-decoration: none;
+	cursor: pointer;
+	transition: background-color 0.15s ease-in-out;
+}
+
+.btn-sync:hover {
+	background-color: #157347;
+	color: #ffffff;
+}
+
+
 .btn-delete {
     display: inline-flex;
     align-items: center;

@@ -3,15 +3,19 @@ package com.gona.app.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.gona.app.model.ApprovalStatus;
+import com.gona.app.model.CMSVersion;
 import com.gona.app.model.cms.CMSComponent;
 import com.gona.app.model.cms.CMSPage;
 import com.gona.app.repository.CMSPageRepository;
+import com.gona.app.synchronize.CMSSynchronizer;
 
 import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.EntityNotFoundException;
@@ -22,6 +26,9 @@ public class CMSPageService {
 	@Autowired
 	private CMSPageRepository cmsPageRepository;
 	
+	@Autowired
+	private CMSSynchronizer cmsSynchronizer;
+	
     public List<CMSPage> getAllPages() {
         return cmsPageRepository.findAll();
     }
@@ -30,20 +37,25 @@ public class CMSPageService {
         return cmsPageRepository.findById(id);
     }
     
-    public Optional<CMSPage> getPageForUidAndApprovalStatus(String uid, ApprovalStatus approvalStatus) {
-        return cmsPageRepository.findByUidAndApprovalStatus(uid, approvalStatus);
+    public Optional<CMSPage> getPageForUidVersionAndApprovalStatus(String uid, CMSVersion version, ApprovalStatus approvalStatus) {
+        return cmsPageRepository.findByUidVersionAndApprovalStatus(uid,version,  approvalStatus);
+    }
+    
+    public Optional<CMSPage> getPageForUidAndVersion(String uid, CMSVersion version) {
+        return cmsPageRepository.getPageForUidAndVersion(uid, version);
     }
 
     public CMSPage savePage(CMSPage page) {
         return cmsPageRepository.save(page);
     }
     
-    public org.springframework.data.domain.Page<CMSPage> getPages(Pageable pageable) {
+    public Page<CMSPage> getPages(Pageable pageable) {
 		return cmsPageRepository.findAll(pageable);
 	}
 
-	public org.springframework.data.domain.Page<CMSPage> getPages(Pageable pageable, String searchQuery, String status) {
-		return cmsPageRepository.findCMSPages(pageable, searchQuery, StringUtils.isNotBlank(status) ? Enum.valueOf(ApprovalStatus.class, status) : null);
+	public Page<CMSPage> getPages(Pageable pageable, String searchQuery, String status, String version) {
+		return cmsPageRepository.findCMSPages(pageable, searchQuery, StringUtils.isNotBlank(status) ? Enum.valueOf(ApprovalStatus.class, status) : null,
+				StringUtils.isNotBlank(version) ? Enum.valueOf(CMSVersion.class, version) : null);
 	}
 	
 	@Transactional
@@ -68,6 +80,29 @@ public class CMSPageService {
 
 	public void deletePage(Long id) {
 		cmsPageRepository.deleteById(id);
+		//TODO delete online version if exists
+	}
+
+	public Long syncPage(String uid) {
+		final List<CMSPage> pages = cmsPageRepository.findByUid(uid);
+		if (CollectionUtils.isEmpty(pages)) {
+			throw new EntityNotFoundException("No page found with uid: " + uid);
+		}
+		final Optional<CMSPage> draftPageOpt = pages.stream()
+				.filter(page -> CMSVersion.Draft.equals(page.getVersion()))
+				.findFirst();
+		if (draftPageOpt.isEmpty()) {
+			throw new EntityNotFoundException("No draft page found with uid: " + uid);
+		}
+		final CMSPage draftPage = draftPageOpt.get();
+		final Optional<CMSPage> onlinePageOpt = pages.stream()
+				.filter(page -> CMSVersion.Online.equals(page.getVersion()))
+				.findFirst();
+		CMSPage onlinePage = onlinePageOpt.orElseGet(() -> {
+			return new CMSPage();
+		});
+		cmsSynchronizer.synchronizePage(draftPage, onlinePage);
+		return onlinePage.getId();
 	}
 
 }

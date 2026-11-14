@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gona.app.model.ApprovalStatus;
+import com.gona.app.model.CMSVersion;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
@@ -18,9 +19,11 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "cmscomponents")
+@Table(name = "cmscomponents", 
+uniqueConstraints = @UniqueConstraint(columnNames = { "uid", "version" }))
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "component_type")
 public abstract class CMSComponent {
@@ -29,8 +32,12 @@ public abstract class CMSComponent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String uid;
+    
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private CMSVersion version;
 
     private String name;
 
@@ -116,6 +123,14 @@ public abstract class CMSComponent {
 
 	public void setPreviewImgUrl(String previewImgUrl) {
 		this.previewImgUrl = previewImgUrl;
+	}
+
+	public CMSVersion getVersion() {
+		return version;
+	}
+
+	public void setVersion(CMSVersion version) {
+		this.version = version;
 	}
 	
 }

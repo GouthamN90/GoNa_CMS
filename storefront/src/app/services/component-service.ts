@@ -12,4 +12,8 @@ export class ComponentService {
         return this.http.get<any>(`${environment.apiUrl}/component/${uid}`);
     }
 
+    getComponentInfoPreviewMode(uid: string): Observable<any> {
+        return this.http.get<any>(`${environment.apiUrl}/preview-component/${uid}`);
+    }
+
 }

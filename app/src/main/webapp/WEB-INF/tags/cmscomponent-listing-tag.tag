@@ -53,6 +53,6 @@
         </c:choose>
     </div>
     
-    <tag:pagination actionUrl="${searchActionUrl}" pagination="${pagination}" searchQuery="${searchQuery}" 
+    <tag:pagination actionUrl="${searchActionUrl}" pagination="${pagination}" searchQuery="${searchQuery}" version="${selectedVersion}"
     	statusFilter="${statusFilter}" sortBy="${pagination.sortBy}" sortDir="${pagination.sortDir}" selectedTemplate="${selectedTemplate }"/>
 </div>

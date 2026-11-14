@@ -54,7 +54,7 @@ public class CMSComponentService {
 		}
 		return null;
 	}
-
+	
 	public CMSComponent getComponentForUidAndApprovalStatus(final String uid, final boolean defaultTemplate,
 			final ApprovalStatus status) {
 		final Optional<CMSComponent> componentOpt = cmsComponentRepository.findByUidAndDefaultTemplateAndApprovalStatus(uid, defaultTemplate, status);

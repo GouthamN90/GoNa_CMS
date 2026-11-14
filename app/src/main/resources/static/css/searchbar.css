@@ -1,8 +1,5 @@
-.filter-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background-color: #ffffff;
+.search-bar-container {
+	background-color: #ffffff;
     padding: 16px 20px;
     border: 1px solid #eaeaea;
     border-radius: 12px;
@@ -10,6 +7,19 @@
     width: 100%;
     box-sizing: border-box;
     margin-bottom: 20px;
+}
+
+.filter-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.search-actions {
+	display: flex;
+	align-items: center;
+    gap: 12px;
 }
 
 /* Search Box Container */

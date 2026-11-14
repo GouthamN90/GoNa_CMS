@@ -3,6 +3,7 @@ package com.gona.app.data;
 import java.util.List;
 
 import com.gona.app.model.ApprovalStatus;
+import com.gona.app.model.CMSVersion;
 
 public class ComponentData {
 	
@@ -11,6 +12,8 @@ public class ComponentData {
 	private String name;
 	
 	private String uid;
+	
+	private CMSVersion version;
 
     private String template;
     
@@ -84,6 +87,14 @@ public class ComponentData {
 
 	public void setPages(List<PageData> pages) {
 		this.pages = pages;
+	}
+
+	public CMSVersion getVersion() {
+		return version;
+	}
+
+	public void setVersion(CMSVersion version) {
+		this.version = version;
 	}
 	
 }

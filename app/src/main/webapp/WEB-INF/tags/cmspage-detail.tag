@@ -8,6 +8,7 @@
 
 <c:set var="editUrl" value="${pageContext.request.contextPath}/edit_page/${pageData.id}" />
 <c:set var="deleteUrl" value="${pageContext.request.contextPath}/delete_page/${pageData.id}" />
+<c:set var="syncUrl" value="${pageContext.request.contextPath}/sync_page/${pageData.uid}" />
 
 <tag:alertmessage-container successMessage="${successMessage}" errorMessage="${errorMessage}" />
 
@@ -15,13 +16,13 @@
     <!-- Header: Title and Action Buttons -->
     <div class="bopage-card-header">
         <h1 class="bopage-title"><c:out value="${pageData.name}" /></h1>
-        <div class="bopage-actions">
-            <a href="${editUrl}" class="btn-edit-info">Edit Info</a>
-            <button class="btn-delete" onclick="deletePageModal()">Delete</button>
-            <%-- <form action="<c:url value='${resolvedDeleteUrl}' />" method="post" style="display:inline; margin:0;" onsubmit="return confirm('Are you sure you want to delete this page?');">
-                <button type="submit" class="btn-delete">Delete</button>
-            </form> --%>
-        </div>
+        <c:if test="${pageData.version == 'Draft'}">
+	        <div class="bopage-actions">
+	            <a href="${editUrl}" class="btn-edit-info">Edit Info</a>
+	            <a href="${syncUrl}" class="btn-sync">Synchronize</a>
+	            <button class="btn-delete" onclick="deletePageModal()">Delete</button>
+	        </div>
+        </c:if>
     </div>
 
     <!-- Page Details List -->
@@ -29,6 +30,17 @@
         <div class="bopage-detail-row">
             <span class="bopage-detail-label">UID:</span>
             <span class="bopage-detail-value"><c:out value="${pageData.uid}" /></span>
+        </div>
+        <div class="bopage-detail-row">
+            <span class="bopage-detail-label">Version:</span>
+            <c:choose>
+                <c:when test="${pageData.version == 'Online'}">
+                    <span class="status-badge status-badge-green"><c:out value="${pageData.version}" /></span>
+                </c:when>
+                <c:otherwise>
+                    <span class="status-badge status-badge-yellow"><c:out value="${pageData.version}" /></span>
+                </c:otherwise>
+            </c:choose>
         </div>
 
         <div class="bopage-detail-row">

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gona.app.model.ApprovalStatus;
+import com.gona.app.model.CMSVersion;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,17 +18,22 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OrderColumn;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "cmspages")
+@Table(name = "cmspages", uniqueConstraints = @UniqueConstraint(columnNames = { "uid", "version" }))
 public class CMSPage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String uid;
+    
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private CMSVersion version;
 
     private String name;
 
@@ -109,7 +115,15 @@ public class CMSPage {
         this.components = components;
     }
     
-    /**
+    public CMSVersion getVersion() {
+		return version;
+	}
+
+	public void setVersion(CMSVersion version) {
+		this.version = version;
+	}
+
+	/**
      * Helper method to add a component and sync both sides of the ManyToMany relationship.
      */
     public void addComponent(CMSComponent component) {
