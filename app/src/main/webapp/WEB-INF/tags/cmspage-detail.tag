@@ -16,13 +16,13 @@
     <!-- Header: Title and Action Buttons -->
     <div class="bopage-card-header">
         <h1 class="bopage-title"><c:out value="${pageData.name}" /></h1>
-        <c:if test="${pageData.version == 'Draft'}">
 	        <div class="bopage-actions">
-	            <a href="${editUrl}" class="btn-edit-info">Edit Info</a>
-	            <a href="${syncUrl}" class="btn-sync">Synchronize</a>
+	        	<c:if test="${pageData.version == 'Draft'}">
+		            <a href="${editUrl}" class="btn-edit-info">Edit Info</a>
+		            <a href="${syncUrl}" class="btn-sync">Synchronize</a>
+	            </c:if>
 	            <button class="btn-delete" onclick="deletePageModal()">Delete</button>
 	        </div>
-        </c:if>
     </div>
 
     <!-- Page Details List -->
@@ -77,7 +77,15 @@
 			<button type="button" class="modal-close-btn" onclick="closeDeletePageModal()" aria-label="Close modal">&times;</button>
 		</div>
 		<div class="modal-body">
-			<p>Once deleted page cannot be retrieved. Are you sure you want to delete this page?</p>
+			<c:choose>
+				<c:when test="${pageData.version == 'Draft'}">
+					<p>Deleting Draft version will also delete Online version of the page and cannot be undone. Please confirm if you want to delete ${pageData.name}.</p>
+				</c:when>
+				<c:otherwise>
+					<p>Deleting Online version will not delete Draft version. Please confirm if you want to delete Online version of ${pageData.name}.</p>
+				</c:otherwise>
+			</c:choose>
+			
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn-modal-reset" onclick="closeDeletePageModal()">Cancel</button>

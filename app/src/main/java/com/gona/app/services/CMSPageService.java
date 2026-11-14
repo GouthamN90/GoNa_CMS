@@ -38,11 +38,11 @@ public class CMSPageService {
     }
     
     public Optional<CMSPage> getPageForUidVersionAndApprovalStatus(String uid, CMSVersion version, ApprovalStatus approvalStatus) {
-        return cmsPageRepository.findByUidVersionAndApprovalStatus(uid,version,  approvalStatus);
+        return cmsPageRepository.findByUidAndVersionAndApprovalStatus(uid,version,  approvalStatus);
     }
     
     public Optional<CMSPage> getPageForUidAndVersion(String uid, CMSVersion version) {
-        return cmsPageRepository.getPageForUidAndVersion(uid, version);
+        return cmsPageRepository.findByUidAndVersion(uid, version);
     }
 
     public CMSPage savePage(CMSPage page) {
@@ -79,8 +79,15 @@ public class CMSPageService {
     }
 
 	public void deletePage(Long id) {
-		cmsPageRepository.deleteById(id);
-		//TODO delete online version if exists
+		CMSPage page = cmsPageRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Page not found"));
+		if (page.getVersion().equals(CMSVersion.Online)) {
+			cmsPageRepository.delete(page);
+		} else {
+			final List<CMSPage> pages = cmsPageRepository.findByUid(page.getUid());
+			cmsPageRepository.deleteAll(pages);
+		}
+		
 	}
 
 	public Long syncPage(String uid) {

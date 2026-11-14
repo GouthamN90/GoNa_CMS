@@ -30,11 +30,11 @@ public interface CMSPageRepository extends JpaRepository<CMSPage, Long> {
 	            @Param("version") final CMSVersion version
 	    );
 
-	Optional<CMSPage> findByUidVersionAndApprovalStatus(final String uid, final CMSVersion version, final ApprovalStatus approvalStatus);
+	Optional<CMSPage> findByUidAndVersionAndApprovalStatus(final String uid, final CMSVersion version, final ApprovalStatus approvalStatus);
 	
 	List<CMSPage> findByUid(final String uid);
 
-	Optional<CMSPage> getPageForUidAndVersion(String uid, CMSVersion version);
+	Optional<CMSPage> findByUidAndVersion(String uid, CMSVersion version);
 	
 	
 

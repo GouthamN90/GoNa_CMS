@@ -3,7 +3,7 @@
 <%@ taglib prefix="tag" tagdir="/WEB-INF/tags" %>
 
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/cmspage-listing.css' />" />
-
+<tag:alertmessage-container successMessage="${successMessage}" errorMessage="${errorMessage}" />
 <div class="gona-bopageList max-w-7xl mx-auto space-y-6">
     <!-- Header Actions Row -->
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
