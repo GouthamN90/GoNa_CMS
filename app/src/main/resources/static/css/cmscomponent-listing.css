@@ -1,0 +1,6 @@
+.component-listing {
+	display: grid;
+	/* align-items: stretch; */
+	grid-template-columns: repeat(4, minmax(250px, 1fr));
+	gap : 1.5rem;
+}

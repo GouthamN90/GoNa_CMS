@@ -1,5 +1,6 @@
 package com.gona.app.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -10,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.gona.app.model.ApprovalStatus;
+import com.gona.app.model.CMSVersion;
 import com.gona.app.model.cms.CMSComponent;
 
 @Repository
@@ -34,4 +36,8 @@ public interface CMSComponentRepository extends JpaRepository<CMSComponent, Long
 
 	Optional<CMSComponent> findByUidAndDefaultTemplateAndApprovalStatus(final String uid,
 			final boolean defaultTemplate, final ApprovalStatus status);
+
+	CMSComponent findByUidAndVersion(String uid, CMSVersion version);
+	
+	List<CMSComponent> findByUid(String uid);
 }

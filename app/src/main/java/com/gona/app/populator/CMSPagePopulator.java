@@ -34,6 +34,7 @@ public class CMSPagePopulator {
 		pageData.setTitle(page.getTitle());
 		pageData.setMetadata(page.getMetadata());
 		pageData.setApprovalStatus(page.getApprovalStatus());
+		pageData.setVersion(page.getVersion());
 		pageData.setComponents(populateComponents(page.getComponents()));
 		return pageData;
 	}

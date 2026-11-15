@@ -24,6 +24,7 @@ import com.gona.app.data.SortOrder;
 import com.gona.app.facade.CMSPageFacade;
 import com.gona.app.form.PageForm;
 import com.gona.app.model.ApprovalStatus;
+import com.gona.app.model.CMSVersion;
 
 import jakarta.validation.Valid;
 
@@ -41,12 +42,19 @@ public class CMSPageController {
 	}
 	
 	@GetMapping("/edit_page/{id}")
-	public String editPage(@PathVariable Long id, Model model) {
+	public String editPage(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
 		PageForm pageForm = cmsPageFacade.createPageFormFromPage(id);
+		
 		if (pageForm == null) {
 			model.addAttribute("errorMessage", "Page not found");
 			return GoNaConstants.ERROR_404_PAGE;
 		}
+		
+		if (CMSVersion.Online.equals(pageForm.getVersion())) {
+			redirectAttributes.addFlashAttribute("errorMessage", "Editing is not allowed for Online version.");
+			return "redirect:/bopage_detail/" + id;
+		}
+		
 		model.addAttribute("pageForm", pageForm);
 		model.addAttribute("approvalStatuses", ApprovalStatus.values());
 		return GoNaConstants.CMSPAGE_CREATE_EDIT_PAGE;
@@ -68,6 +76,7 @@ public class CMSPageController {
 	    
 	    long id = 0;
 	    try {
+	    	pageForm.setVersion(CMSVersion.Draft); // Set the version to Draft always while saving from the backoffice.
 	        id = cmsPageFacade.savePage(pageForm);
 	        redirectAttributes.addFlashAttribute("successMessage", "Saved Page Successfully ");
 	    } catch (Exception e) {
@@ -88,15 +97,18 @@ public class CMSPageController {
             @RequestParam(defaultValue = "name") String sortBy,
             @RequestParam(defaultValue = "DSC") String sortDir, 
             @RequestParam(defaultValue = "") String searchQuery,
-            @RequestParam(defaultValue = "") String status) {
+            @RequestParam(defaultValue = "") String status,
+            @RequestParam(defaultValue = "") String version) {
 		final PageablePageData pageablePageData = cmsPageFacade.getPageListingData(
-				pageNum, pageSize, sortBy, sortDir, searchQuery, status);
+				pageNum, pageSize, sortBy, sortDir, searchQuery, status, version);
 		model.addAttribute("listPages", pageablePageData.getPageList());
 		model.addAttribute("pagination", pageablePageData.getPageableData());
 		model.addAttribute("sortBy", List.of(SortBy.name, SortBy.uid));
 		model.addAttribute("sortOrder", SortOrder.values());
+		model.addAttribute("versions", CMSVersion.values());
 		model.addAttribute("approvalStatus", ApprovalStatus.values());
 		model.addAttribute("statusFilter", StringUtils.isNotBlank(status) ? Enum.valueOf(ApprovalStatus.class, status) : null);
+		model.addAttribute("selectedVersion", StringUtils.isNotBlank(version) ? Enum.valueOf(CMSVersion.class, version) : null);
 		model.addAttribute("searchQuery", searchQuery);
         return GoNaConstants.CMSPAGE_LISTING_PAGE;
 	}
@@ -118,6 +130,18 @@ public class CMSPageController {
 			cmsPageFacade.deletePage(id);
 		} catch (Exception e) {
 			redirectAttributes.addFlashAttribute("errorMessage", "Error deleting page: " + e.getMessage());
+		}
+		return "redirect:/bopage_list";
+	}
+	
+	@GetMapping("/sync_page/{uid}")
+	public String syncPage(@PathVariable String uid, RedirectAttributes redirectAttributes) {
+		try {
+			long id = cmsPageFacade.syncPage(uid);
+			redirectAttributes.addFlashAttribute("successMessage", "Page synchronized successfully.");
+			return "redirect:/bopage_detail/" + id;
+		} catch (Exception e) {
+			redirectAttributes.addFlashAttribute("errorMessage", "Error synchronizing page: " + e.getMessage());
 		}
 		return "redirect:/bopage_list";
 	}

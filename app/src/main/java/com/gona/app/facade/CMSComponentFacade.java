@@ -93,7 +93,9 @@ public class CMSComponentFacade {
 		editComponentData.setUid(component.getUid());
 		editComponentData.setTemplate(component.getTemplate());
 		editComponentData.setApprovalStatus(component.getApprovalStatus());
+		editComponentData.setVersion(component.getVersion());
 		editComponentData.setComponentForm(componentForm);
+		editComponentData.setId(component.getId());
 		
 		if (CollectionUtils.isNotEmpty(component.getPages())) {
 			List<PageData> pageDataList = new ArrayList<>();
@@ -163,6 +165,15 @@ public class CMSComponentFacade {
 			}
 		}
 		return StringUtils.EMPTY;
+	}
+
+	public Long syncComponent(final String uid) {
+		return cmsComponentService.syncComponent(uid);
+	}
+
+	public void deleteComponent(Long id) {
+		cmsComponentService.deleteComponent(id);
+		
 	}
 	
 }

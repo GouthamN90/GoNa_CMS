@@ -8,6 +8,7 @@
 
 <c:set var="editUrl" value="${pageContext.request.contextPath}/edit_page/${pageData.id}" />
 <c:set var="deleteUrl" value="${pageContext.request.contextPath}/delete_page/${pageData.id}" />
+<c:set var="syncUrl" value="${pageContext.request.contextPath}/sync_page/${pageData.uid}" />
 
 <tag:alertmessage-container successMessage="${successMessage}" errorMessage="${errorMessage}" />
 
@@ -16,11 +17,11 @@
     <div class="bopage-card-header">
         <h1 class="bopage-title"><c:out value="${pageData.name}" /></h1>
         <div class="bopage-actions">
-            <a href="${editUrl}" class="btn-edit-info">Edit Info</a>
+        	<c:if test="${pageData.version == 'Draft'}">
+	            <a href="${editUrl}" class="btn-edit-info">Edit Info</a>
+	            <a href="${syncUrl}" class="btn-sync">Synchronize</a>
+            </c:if>
             <button class="btn-delete" onclick="deletePageModal()">Delete</button>
-            <%-- <form action="<c:url value='${resolvedDeleteUrl}' />" method="post" style="display:inline; margin:0;" onsubmit="return confirm('Are you sure you want to delete this page?');">
-                <button type="submit" class="btn-delete">Delete</button>
-            </form> --%>
         </div>
     </div>
 
@@ -29,6 +30,17 @@
         <div class="bopage-detail-row">
             <span class="bopage-detail-label">UID:</span>
             <span class="bopage-detail-value"><c:out value="${pageData.uid}" /></span>
+        </div>
+        <div class="bopage-detail-row">
+            <span class="bopage-detail-label">Version:</span>
+            <c:choose>
+                <c:when test="${pageData.version == 'Online'}">
+                    <span class="status-badge status-badge-green"><c:out value="${pageData.version}" /></span>
+                </c:when>
+                <c:otherwise>
+                    <span class="status-badge status-badge-yellow"><c:out value="${pageData.version}" /></span>
+                </c:otherwise>
+            </c:choose>
         </div>
 
         <div class="bopage-detail-row">
@@ -65,7 +77,15 @@
 			<button type="button" class="modal-close-btn" onclick="closeDeletePageModal()" aria-label="Close modal">&times;</button>
 		</div>
 		<div class="modal-body">
-			<p>Once deleted page cannot be retrieved. Are you sure you want to delete this page?</p>
+			<c:choose>
+				<c:when test="${pageData.version == 'Draft'}">
+					<p>Deleting Draft version will also delete Online version of the page and cannot be undone. Please confirm if you want to delete ${pageData.name}.</p>
+				</c:when>
+				<c:otherwise>
+					<p>Deleting Online version will not delete Draft version. Please confirm if you want to delete Online version of ${pageData.name}.</p>
+				</c:otherwise>
+			</c:choose>
+			
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn-modal-reset" onclick="closeDeletePageModal()">Cancel</button>

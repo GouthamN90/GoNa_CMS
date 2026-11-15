@@ -33,26 +33,22 @@
     
     <tag:searchbar actionUrl="${searchActionUrl}" searchPlaceholder="${searchPlaceHolder }" />
     
-    <div class="table-body">
-        <c:choose>
-            <c:when test="${not empty listComponents}">
-                
-                <c:forEach var="item" items="${listComponents}">
-                    <tag:cmscomponent-card 
-						template="${item.template}" 
-						uid="${item.uid}" 
-						name="${item.name}" 
-						imageUrl="${item.previewImgUrl}" 
-						itemId="${item.id}"/>
-                </c:forEach>
-            </c:when>
-            
-            <c:otherwise>
-                <tag:empty-list-tag />
-            </c:otherwise>
-        </c:choose>
-    </div>
     
-    <tag:pagination actionUrl="${searchActionUrl}" pagination="${pagination}" searchQuery="${searchQuery}" 
+     <c:choose>
+         <c:when test="${not empty listComponents}">
+             <div class="component-listing">
+	             <c:forEach var="item" items="${listComponents}">
+	                 <tag:cmscomponent-card template="${item.template}" uid="${item.uid}" name="${item.name}" 
+	                 imageUrl="${item.previewImgUrl}" itemId="${item.id}" version="${item.version}"	status="${item.approvalStatus}"/>
+	             </c:forEach>
+             </div>
+         </c:when>
+         
+         <c:otherwise>
+             <tag:empty-list-tag />
+         </c:otherwise>
+     </c:choose>
+    
+    <tag:pagination actionUrl="${searchActionUrl}" pagination="${pagination}" searchQuery="${searchQuery}" selectedVersion="${selectedVersion}"
     	statusFilter="${statusFilter}" sortBy="${pagination.sortBy}" sortDir="${pagination.sortDir}" selectedTemplate="${selectedTemplate }"/>
 </div>

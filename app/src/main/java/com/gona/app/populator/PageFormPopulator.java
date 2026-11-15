@@ -15,6 +15,7 @@ public class PageFormPopulator {
 		page.setTitle(pageForm.getTitle());
 		page.setMetadata(pageForm.getMetadata());
 		page.setApprovalStatus(pageForm.getApprovalStatus());
+		page.setVersion(pageForm.getVersion());
 	}
 	
 	public void populate(CMSPage page, PageForm pageForm) {
@@ -24,5 +25,6 @@ public class PageFormPopulator {
 		pageForm.setTitle(page.getTitle());
 		pageForm.setMetadata(page.getMetadata());
 		pageForm.setApprovalStatus(page.getApprovalStatus());
+		pageForm.setVersion(page.getVersion());
 	}
 }

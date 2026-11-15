@@ -18,6 +18,7 @@ import com.gona.app.data.SortBy;
 import com.gona.app.data.SortOrder;
 import com.gona.app.form.PageForm;
 import com.gona.app.model.ApprovalStatus;
+import com.gona.app.model.CMSVersion;
 import com.gona.app.model.cms.CMSComponent;
 import com.gona.app.model.cms.CMSPage;
 import com.gona.app.populator.PageFormPopulator;
@@ -41,15 +42,15 @@ public class CMSPageFacade {
 	private PageFormPopulator pageFormPopulator;
 	
 	public PageablePageData getPageListingData(int pageNum, int pageSize, String sortBy, String sortDir, 
-			String searchQuery, String status) {
+			String searchQuery, String status, String version) {
 		Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) 
                 ? Sort.by(sortBy).ascending() 
                 : Sort.by(sortBy).descending();
     
 		final Pageable pageable = PageRequest.of(pageNum, pageSize, sort);
 		Page<CMSPage> pagePageable = null;
-		if (StringUtils.isNotBlank(searchQuery) || StringUtils.isNotBlank(status)) {
-			pagePageable = cmsPageService.getPages(pageable, searchQuery, status);
+		if (StringUtils.isNotBlank(searchQuery) || StringUtils.isNotBlank(status) || StringUtils.isNotBlank(version)) {
+			pagePageable = cmsPageService.getPages(pageable, searchQuery, status, version);
 		} else {
 			pagePageable = cmsPageService.getPages(pageable);
 		}
@@ -142,11 +143,24 @@ public class CMSPageFacade {
 	}
 	
 	public PageData getPageData(final String uid) {
-		final Optional<CMSPage> pageOpt = cmsPageService.getPageForUidAndApprovalStatus(uid, ApprovalStatus.Show);
+		final Optional<CMSPage> pageOpt = cmsPageService.getPageForUidVersionAndApprovalStatus(uid, CMSVersion.Online ,ApprovalStatus.Show);
 		if (pageOpt.isPresent()) {
 			return cmsPagePopulator.populate(pageOpt.get());
 		}
 		return null;
+	}
+	
+	public PageData getPageDataPreviewMode(final String uid) {
+		final Optional<CMSPage> pageOpt = cmsPageService.getPageForUidAndVersion(uid, CMSVersion.Draft);
+		if (pageOpt.isPresent()) {
+			return cmsPagePopulator.populate(pageOpt.get());
+		}
+		return null;
+	}
+
+
+	public Long syncPage(String uid) {
+		return cmsPageService.syncPage(uid);
 	}
 
 }

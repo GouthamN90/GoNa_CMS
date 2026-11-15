@@ -6,26 +6,41 @@
 <%@ attribute name="name" type="java.lang.String" required="true" rtexprvalue="true" description="Display name of the component" %>
 <%@ attribute name="imageUrl" type="java.lang.String" required="false" rtexprvalue="true" description="Optional preview image URL" %>
 <%@ attribute name="itemId" type="java.lang.String" required="true" rtexprvalue="true" description="Target URL for the Create button" %>
+<%@ attribute name="version" type="java.lang.String" required="false" rtexprvalue="true" description="Version of the component" %>
+<%@ attribute name="status" type="java.lang.String" required="false" rtexprvalue="true" description="Status of the component" %>
 
 <!-- Externalized Component Card Stylesheet -->
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/component_card.css' />" />
 <script defer src="<c:url value='/js/cmscomponent-card.js' />"></script>
 
 <c:choose>
-	<c:when test="${defaultTemplateListFlag == true}">
-		<c:set var="resolvedButtonText" value="Create ${template }"/>
+	<c:when test="${status == 'Show'}">
+		<c:set var="statusBadgeClass" value="status-badge-green"/>
+	</c:when>
+	<c:when test="${status == 'PendingApproval'}">
+		<c:set var="statusBadgeClass" value="status-badge-yellow"/>
 	</c:when>
 	<c:otherwise>
-		<c:set var="resolvedButtonText" value=""/>
+		<c:set var="statusBadgeClass" value="status-badge-red"/>
 	</c:otherwise>
 </c:choose>
 
-<c:set var="resolvedButtonText" value="${not empty buttonText ? buttonText : 'Create '.concat(template)}" />
+<c:choose>
+	<c:when test="${version == 'Draft'}">
+		<c:set var="versionBadgeClass" value="status-badge-yellow"/>
+		<c:set var="resolvedButtonText" value="Edit ${template}"/>
+	</c:when>
+	<c:otherwise>
+		<c:set var="versionBadgeClass" value="status-badge-green"/>
+		<c:set var="resolvedButtonText" value="View ${template}"/>
+	</c:otherwise>
+</c:choose>
 
 <div class="gona-component-card">
     <!-- Top Preview Area -->
     <div class="component-card-preview">
-        <span class="component-type-badge"><c:out value="${template}" /></span>
+        <span class="component-type-versionbadge ${versionBadgeClass}"><c:out value="${version}" /></span>
+        <span class="component-type-badge ${statusBadgeClass}"><c:out value="${status}" /></span>
 
         <c:choose>
             <c:when test="${not empty imageUrl}">
@@ -46,8 +61,10 @@
 
     <!-- Bottom Details & Action Area -->
     <div class="component-card-body">
-        <span class="component-uid-tag"><c:out value="${uid}" /></span>
+        
         <h3 class="component-card-title"><c:out value="${name}" /></h3>
+        <span class="component-uid-tag"><c:out value="${uid}" /></span>
+        <span class="component-uid-tag"><c:out value="${template}" /></span>
 
         <hr class="component-card-divider" />
         
@@ -59,7 +76,7 @@
 			</c:when>
 			<c:otherwise>
 				<a href="<c:url value='/update_component/${itemId}' />" class="component-create-btn">
-		            Edit Component
+		            ${resolvedButtonText}
 		        </a>
 			</c:otherwise>
 		</c:choose>

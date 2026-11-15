@@ -1,10 +1,10 @@
 START TRANSACTION;
 
 INSERT INTO cmscomponents
-    (uid, name, template, preview_img_url, default_template, approval_status, component_type)
+    (uid, name, template, preview_img_url, default_template, approval_status, component_type, version)
 VALUES
     ('default_banner_component', 'Default Banner Component', 'BannerComponent',
-     '/images/default_bannercomponent.png', 1, 'Show', 'BANNER');
+     '/images/default_bannercomponent.png', 1, 'Show', 'BANNER', 'Draft');
 
 SET @component_id = LAST_INSERT_ID();
 
