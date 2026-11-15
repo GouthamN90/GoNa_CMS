@@ -27,6 +27,7 @@ import com.gona.app.form.BannerComponentForm;
 import com.gona.app.form.CloneComponentForm;
 import com.gona.app.form.ComponentForm;
 import com.gona.app.model.ApprovalStatus;
+import com.gona.app.model.CMSVersion;
 
 import jakarta.validation.Valid;
 
@@ -42,9 +43,10 @@ public class CMSComponentController {
             @RequestParam(defaultValue = "name") String sortBy,
             @RequestParam(defaultValue = "DSC") String sortDir, 
             @RequestParam(defaultValue = "") String searchQuery,
-            @RequestParam(defaultValue = "") String selectedTemplate) {
+            @RequestParam(defaultValue = "") String selectedTemplate,
+            @RequestParam(defaultValue = "") String version) {
 		final PageableComponentData pageableComponentData = cmsComponentFacade.getComponentListingData(
-				pageNum, pageSize, sortBy, sortDir, searchQuery, selectedTemplate, true);
+				pageNum, pageSize, sortBy, sortDir, searchQuery, selectedTemplate, true, CMSVersion.Draft.toString());
 		model.addAttribute("defaultTemplateListFlag",true);
 		populateModelForComponentsListing(model, pageableComponentData, searchQuery, selectedTemplate);
         return GoNaConstants.CMSCOMPONENT_LISTING_PAGE;
@@ -66,11 +68,14 @@ public class CMSComponentController {
             @RequestParam(defaultValue = "name") String sortBy,
             @RequestParam(defaultValue = "DSC") String sortDir, 
             @RequestParam(defaultValue = "") String searchQuery,
-            @RequestParam(defaultValue = "") String selectedTemplate) {
+            @RequestParam(defaultValue = "") String selectedTemplate,
+            @RequestParam(defaultValue = "") String version) {
 		final PageableComponentData pageableComponentData = cmsComponentFacade.getComponentListingData(
-				pageNum, pageSize, sortBy, sortDir, searchQuery, selectedTemplate, false);
+				pageNum, pageSize, sortBy, sortDir, searchQuery, selectedTemplate, false, version);
 		model.addAttribute("defaultTemplateListFlag",false);
 		populateModelForComponentsListing(model, pageableComponentData, searchQuery, selectedTemplate);
+		model.addAttribute("selectedVersion", StringUtils.isNotBlank(version) ? Enum.valueOf(CMSVersion.class, version) : null);
+		model.addAttribute("versions", CMSVersion.values());
         return GoNaConstants.CMSCOMPONENT_LISTING_PAGE;
 	}
 	
@@ -78,7 +83,7 @@ public class CMSComponentController {
 	@ResponseBody
 	List<ComponentData> getComponents(@RequestParam(defaultValue = "") String searchQuery) {
 		final PageableComponentData pageableComponentData = cmsComponentFacade.getComponentListingData(
-				0, 10, "name", "ASC", searchQuery, StringUtils.EMPTY, false);
+				0, 10, "name", "ASC", searchQuery, StringUtils.EMPTY, false, CMSVersion.Draft.toString());
 		return pageableComponentData.getComponentList();
 	}
 	

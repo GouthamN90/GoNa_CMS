@@ -52,15 +52,15 @@ public class CMSComponentFacade {
 	private ObjectMapper objectMapper;
 	
 	public PageableComponentData getComponentListingData(int pageNum, int pageSize, String sortBy, String sortDir, 
-			String searchQuery, String selectedTemplate, boolean defaultTemplate) {
+			String searchQuery, String selectedTemplate, boolean defaultTemplate, String version) {
 		Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) 
                 ? Sort.by(sortBy).ascending() 
                 : Sort.by(sortBy).descending();
     
 		final Pageable pageable = PageRequest.of(pageNum, pageSize, sort);
 		Page<CMSComponent> componentPageable = null;
-		if (StringUtils.isNotBlank(searchQuery) || StringUtils.isNotBlank(selectedTemplate)) {
-			componentPageable = cmsComponentService.getAllComponents(pageable, searchQuery, selectedTemplate, defaultTemplate);
+		if (StringUtils.isNotBlank(searchQuery) || StringUtils.isNotBlank(selectedTemplate) || StringUtils.isNotBlank(version)) {
+			componentPageable = cmsComponentService.getAllComponents(pageable, searchQuery, selectedTemplate, defaultTemplate, version);
 		} else {
 			componentPageable = cmsComponentService.getAllComponents(pageable, defaultTemplate);
 		}

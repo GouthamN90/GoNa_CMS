@@ -22,11 +22,13 @@ public interface CMSComponentRepository extends JpaRepository<CMSComponent, Long
 	           " LOWER(c.name) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
 	           " LOWER(c.template) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
 	           " LOWER(c.uid) LIKE LOWER(CONCAT('%', :search, '%'))) "
-	           + "AND (:selectedTemplate IS NULL OR :selectedTemplate = '' OR c.template = :selectedTemplate)")
+	           + "AND (:selectedTemplate IS NULL OR :selectedTemplate = '' OR c.template = :selectedTemplate) "
+	           + "AND (:version IS NULL OR c.version = :version)")
     Page<CMSComponent> fetchAllCMSComponents(final Pageable pageable,
             @Param("search") final String search,
             @Param("selectedTemplate") final String selectedTemplate,
-            @Param("defaultTemplate") final boolean defaultTemplate
+            @Param("defaultTemplate") final boolean defaultTemplate,
+            @Param("version") final CMSVersion version
     );
 	
 	@Query("SELECT c FROM CMSComponent c WHERE c.defaultTemplate = :defaultTemplate")
