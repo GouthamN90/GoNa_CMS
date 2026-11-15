@@ -14,6 +14,9 @@ import com.gona.app.model.CMSVersion;
 import com.gona.app.model.cms.CMSComponent;
 import com.gona.app.repository.CMSComponentRepository;
 import com.gona.app.synchronize.CMSSynchronizer;
+
+import io.micrometer.common.util.StringUtils;
+
 import com.gona.app.form.CloneComponentForm;
 
 import jakarta.persistence.EntityManager;
@@ -36,8 +39,10 @@ public class CMSComponentService {
 		return cmsComponentRepository.fetchAllCMSComponents(pageable, defaultTemplate);
 	}
 
-	public Page<CMSComponent> getAllComponents(final Pageable pageable, final String searchQuery, final String selectedTemplate, final boolean defaultTemplate) {
-		return cmsComponentRepository.fetchAllCMSComponents(pageable, searchQuery, selectedTemplate, defaultTemplate);
+	public Page<CMSComponent> getAllComponents(final Pageable pageable, final String searchQuery, final String selectedTemplate, 
+			final boolean defaultTemplate, final String version) {
+		return cmsComponentRepository.fetchAllCMSComponents(pageable, searchQuery, selectedTemplate, defaultTemplate, 
+				StringUtils.isNotBlank(version) ? Enum.valueOf(CMSVersion.class, version) : null);
 	}
 	
 	public Optional<CMSComponent> getByIdAndDefaultTemplate(final Long id, final boolean defaultTemplate) {
