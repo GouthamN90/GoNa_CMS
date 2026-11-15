@@ -1,6 +1,9 @@
 package com.gona.app.synchronize;
 
+import java.util.Collections;
+
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,9 +37,11 @@ public class CMSSynchronizer {
 		onlinePage.setTitle(draftPage.getTitle());
 		onlinePage.setApprovalStatus(draftPage.getApprovalStatus());
 		onlinePage.setMetadata(draftPage.getMetadata());
+		onlinePage.setComponents(Collections.emptyList());
 		if (CollectionUtils.isNotEmpty(draftPage.getComponents())) {
 			draftPage.getComponents().forEach(component -> {
 				final CMSComponent onlineComponent = synchronizePageComponent(component);
+				//TODO Add based on the order of components in draft page
 				onlinePage.addComponent(onlineComponent);
 			});
 		}
@@ -51,10 +56,30 @@ public class CMSSynchronizer {
 			entityManager.detach(onlineComponent);
 			onlineComponent.setId(null);
 			onlineComponent.setVersion(CMSVersion.Online);
+			onlineComponent.setPages(Collections.emptyList());
 			cmsComponentRepository.save(onlineComponent);
 		}
 		return onlineComponent;
 		
 	}
+	
+	@Transactional
+	public CMSComponent synchronizeComponent(CMSComponent draftComponent, CMSComponent onlineComponent) {
+		if (onlineComponent == null) {
+			onlineComponent = draftComponent;
+			entityManager.detach(onlineComponent);
+			onlineComponent.setId(null);
+			onlineComponent.setVersion(CMSVersion.Online);
+			onlineComponent.setPages(Collections.emptyList());
+			cmsComponentRepository.save(onlineComponent);
+		} else {
+			BeanUtils.copyProperties(draftComponent, onlineComponent, "id", "version", "pages");
+			onlineComponent.setVersion(CMSVersion.Online);
+			cmsComponentRepository.save(onlineComponent);
+		}
+		
+		return onlineComponent;
+	}
+
 
 }

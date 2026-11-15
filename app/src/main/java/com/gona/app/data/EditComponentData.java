@@ -4,10 +4,13 @@ import java.util.List;
 
 import com.gona.app.form.ComponentForm;
 import com.gona.app.model.ApprovalStatus;
+import com.gona.app.model.CMSVersion;
 
 public class EditComponentData {
 	
 	private String name;
+	
+	private Long id;
 	
 	private String uid;
 
@@ -16,6 +19,8 @@ public class EditComponentData {
     private ApprovalStatus approvalStatus;
     
     private List<PageData> pages;
+    
+    private CMSVersion version;
     
     private ComponentForm componentForm;
     
@@ -65,6 +70,22 @@ public class EditComponentData {
 
 	public void setComponentForm(ComponentForm componentForm) {
 		this.componentForm = componentForm;
+	}
+
+	public CMSVersion getVersion() {
+		return version;
+	}
+
+	public void setVersion(CMSVersion version) {
+		this.version = version;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 }

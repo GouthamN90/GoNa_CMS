@@ -31,6 +31,7 @@ public class CMSComponentPopulator {
 		componentData.setApprovalStatus(component.getApprovalStatus());
 		componentData.setUid(component.getUid());
 		componentData.setId(component.getId());
+		componentData.setVersion(component.getVersion());
 		if (CollectionUtils.isNotEmpty(component.getPages())) {
 			List<PageData> pageDataList = new ArrayList<>();
 			for (CMSPage page : component.getPages()) {

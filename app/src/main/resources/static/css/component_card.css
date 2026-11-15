@@ -39,8 +39,18 @@
     position: absolute;
     top: 12px;
     right: 12px;
-    background-color: #059669;
-    color: #ffffff;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    letter-spacing: 0.2px;
+    z-index: 2;
+}
+
+.component-type-versionbadge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
     font-size: 0.78rem;
     font-weight: 700;
     padding: 4px 12px;

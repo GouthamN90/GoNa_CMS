@@ -16,13 +16,13 @@
     <!-- Header: Title and Action Buttons -->
     <div class="bopage-card-header">
         <h1 class="bopage-title"><c:out value="${pageData.name}" /></h1>
-	        <div class="bopage-actions">
-	        	<c:if test="${pageData.version == 'Draft'}">
-		            <a href="${editUrl}" class="btn-edit-info">Edit Info</a>
-		            <a href="${syncUrl}" class="btn-sync">Synchronize</a>
-	            </c:if>
-	            <button class="btn-delete" onclick="deletePageModal()">Delete</button>
-	        </div>
+        <div class="bopage-actions">
+        	<c:if test="${pageData.version == 'Draft'}">
+	            <a href="${editUrl}" class="btn-edit-info">Edit Info</a>
+	            <a href="${syncUrl}" class="btn-sync">Synchronize</a>
+            </c:if>
+            <button class="btn-delete" onclick="deletePageModal()">Delete</button>
+        </div>
     </div>
 
     <!-- Page Details List -->

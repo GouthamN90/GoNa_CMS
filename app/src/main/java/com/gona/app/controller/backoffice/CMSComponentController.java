@@ -38,7 +38,7 @@ public class CMSComponentController {
 	
 	@GetMapping("/select_default_component")
 	public String viewDefaultComponents(Model model, @RequestParam(defaultValue = "0") int pageNum,
-            @RequestParam(defaultValue = "9") int pageSize,
+            @RequestParam(defaultValue = "12") int pageSize,
             @RequestParam(defaultValue = "name") String sortBy,
             @RequestParam(defaultValue = "DSC") String sortDir, 
             @RequestParam(defaultValue = "") String searchQuery,
@@ -62,7 +62,7 @@ public class CMSComponentController {
 	
 	@GetMapping("/components_listing")
 	public String viewComponentsListing(Model model, @RequestParam(defaultValue = "0") int pageNum,
-            @RequestParam(defaultValue = "9") int pageSize,
+            @RequestParam(defaultValue = "12") int pageSize,
             @RequestParam(defaultValue = "name") String sortBy,
             @RequestParam(defaultValue = "DSC") String sortDir, 
             @RequestParam(defaultValue = "") String searchQuery,
@@ -142,7 +142,29 @@ public class CMSComponentController {
 			redirectAttributes.addFlashAttribute("errorMessage", "Failed to save component.");
 		}
 		return "redirect:/update_component/" + componentForm.getId();
-		
+	}
+	
+	@GetMapping("/sync_component/{uid}")
+	public String syncComponent(@PathVariable String uid, RedirectAttributes redirectAttributes) {
+		try {
+			final Long componentId = cmsComponentFacade.syncComponent(uid);
+			redirectAttributes.addFlashAttribute("successMessage", "Component synchronized successfully.");
+			return "redirect:/update_component/" + componentId;
+		} catch (Exception e) {
+			redirectAttributes.addFlashAttribute("errorMessage", "Failed to synchronize component: " + e.getMessage());
+			return "redirect:/components_listing";
+		}
+	}
+	
+	@GetMapping("/delete_component/{id}")
+	public String deleteComponent(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+		try {
+			cmsComponentFacade.deleteComponent(id);
+			redirectAttributes.addFlashAttribute("successMessage", "Component deleted successfully.");
+		} catch (Exception e) {
+			redirectAttributes.addFlashAttribute("errorMessage", "Failed to delete component: " + e.getMessage());
+		}
+		return "redirect:/components_listing";
 	}
 
 }
