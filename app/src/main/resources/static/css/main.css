@@ -127,6 +127,22 @@ h1 {
     color: #ffffff;
     border: none;
     border-radius: 6px;
+    padding: 10px 24px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.15s ease-in-out;
+}
+
+.a-btn-delete {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #dc3545;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
     padding: 8px 18px;
     font-size: 0.95rem;
     font-weight: 600;

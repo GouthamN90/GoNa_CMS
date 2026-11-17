@@ -18,6 +18,7 @@
 				
 				<div class="app-content">
 					<tag:cmspage-detail/>
+					<tag:cmspage-component-assignment/>
 				</div>
 			</div>
 		</div>

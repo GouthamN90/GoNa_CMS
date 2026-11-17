@@ -128,6 +128,7 @@ public class CMSPageController {
 	public String deletePage(@PathVariable Long id, RedirectAttributes redirectAttributes) {
 		try {
 			cmsPageFacade.deletePage(id);
+			redirectAttributes.addFlashAttribute("successMessage", "Page deleted successfully.");
 		} catch (Exception e) {
 			redirectAttributes.addFlashAttribute("errorMessage", "Error deleting page: " + e.getMessage());
 		}
@@ -150,6 +151,7 @@ public class CMSPageController {
 	public String addComponentToPage(@PathVariable Long pageId, @PathVariable Long componentId, RedirectAttributes redirectAttributes) {
 		try {
 			cmsPageFacade.addComponentToPage(pageId, componentId);
+			redirectAttributes.addFlashAttribute("successMessage", "Added component successfully");
 		} catch (Exception e) {
 			redirectAttributes.addFlashAttribute("errorMessage", "Error adding component to page: " + e.getMessage());
 		}
@@ -160,6 +162,7 @@ public class CMSPageController {
 	public String removeComponentToPage(@PathVariable Long pageId, @PathVariable Long componentId, RedirectAttributes redirectAttributes) {
 		try {
 			cmsPageFacade.removeComponentFromPage(pageId, componentId);
+			redirectAttributes.addFlashAttribute("successMessage", "Removed component from page successfully");
 		} catch (Exception e) {
 			redirectAttributes.addFlashAttribute("errorMessage", "Error adding component to page: " + e.getMessage());
 		}

@@ -3,6 +3,7 @@ package com.gona.app.facade;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -94,7 +95,14 @@ public class CMSPageFacade {
 	public PageData getBOPageData(final Long id) {
 		Optional<CMSPage> pageOpt = cmsPageService.getPageForId(id);
 		if (pageOpt.isPresent()) {
-			return cmsPagePopulator.populate(pageOpt.get());
+			final PageData pageData = cmsPagePopulator.populate(pageOpt.get());
+			if (CMSVersion.Online.equals(pageData.getVersion())) {
+				Optional<CMSPage> draftVersionPage = cmsPageService.getPageForUidAndVersion(pageData.getUid(), CMSVersion.Draft);
+				if (draftVersionPage.isPresent()) {
+					pageData.setDraftVersionId(draftVersionPage.get().getId());
+				}
+			}
+			return pageData;
 		}
 		return null;
 	}
@@ -106,6 +114,11 @@ public class CMSPageFacade {
 		if (pageOpt.isPresent() && componentOpt.isPresent()) {
 			CMSPage page = pageOpt.get();
 			CMSComponent component = componentOpt.get();
+			if (CMSVersion.Online.equals(page.getVersion()) || CMSVersion.Online.equals(component.getVersion())
+					|| BooleanUtils.isTrue(component.isDefaultTemplate())) {
+				throw new IllegalArgumentException(
+						"Page/Component should not be online version or default template: " + pageId + "/" + componentId);
+			}
 			page.addComponent(component);
 			cmsPageService.savePage(page);
 		} else {
@@ -143,7 +156,7 @@ public class CMSPageFacade {
 	}
 	
 	public PageData getPageData(final String uid) {
-		final Optional<CMSPage> pageOpt = cmsPageService.getPageForUidVersionAndApprovalStatus(uid, CMSVersion.Online ,ApprovalStatus.Show);
+		final Optional<CMSPage> pageOpt = cmsPageService.getPageForUidVersionAndApprovalStatus(uid, CMSVersion.Online, ApprovalStatus.Show);
 		if (pageOpt.isPresent()) {
 			return cmsPagePopulator.populate(pageOpt.get());
 		}

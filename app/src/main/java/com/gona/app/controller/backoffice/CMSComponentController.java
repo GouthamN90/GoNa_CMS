@@ -79,12 +79,14 @@ public class CMSComponentController {
         return GoNaConstants.CMSCOMPONENT_LISTING_PAGE;
 	}
 	
-	@GetMapping("/api/components")
-	@ResponseBody
-	List<ComponentData> getComponents(@RequestParam(defaultValue = "") String searchQuery) {
+	@GetMapping("/assign_search_components")
+	public String getComponentsForAssigning(Model model, @RequestParam(defaultValue = "") String searchQuery,
+			@RequestParam(defaultValue = "") String pageId) {
 		final PageableComponentData pageableComponentData = cmsComponentFacade.getComponentListingData(
 				0, 10, "name", "ASC", searchQuery, StringUtils.EMPTY, false, CMSVersion.Draft.toString());
-		return pageableComponentData.getComponentList();
+		model.addAttribute("listComponents", pageableComponentData.getComponentList());
+		model.addAttribute("pageId", pageId);
+		return GoNaConstants.CMSCOMPONENT_ASSIGN_SEARCH_PAGE;
 	}
 	
 	

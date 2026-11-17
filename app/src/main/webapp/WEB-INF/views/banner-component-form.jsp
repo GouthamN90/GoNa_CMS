@@ -46,7 +46,6 @@
 
         <!-- Action Buttons -->
         <div class="component-form-actions">
-            <button type="button" class="btn-preview-component" onclick="previewComponent()">Preview Component</button>
             <button type="submit" class="btn-save-component">Save Component</button>
         </div>
     </form:form>

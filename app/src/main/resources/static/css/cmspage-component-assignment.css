@@ -1,0 +1,93 @@
+.pg-comp-assign-warapper{
+	background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 24px 32px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #1f2937;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.search-group {
+    position: relative;
+    flex-grow: 2;
+    min-width: 400px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 5px;
+    top: 33%;
+    transform: translateY(-50%);
+    color: #999999;
+    font-size: 14px;
+}
+
+/* Shared form element designs */
+.filter-input-text, .filter-select {
+    width: 40%;
+    padding: 10px 14px;
+    border: 1px solid #c8c4c4;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #333333;
+    outline: none;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* Specific offset for the input text icon space */
+.filter-input-text {
+    padding-left: 36px;
+}
+
+.component-listing {
+	display: grid;
+	align-items: stretch; 
+	grid-template-columns: repeat(10, minmax(250px, 1fr));
+	gap : 1.5rem;
+	margin-bottom : 20px;
+	margin-top : 20px;
+}
+
+.page-component-card {
+    padding: 10px 16px 16px 16px;
+    margin-bottom: 10px;
+    background: #ffffff;
+    border: 1px solid #bfc3ca;
+    border-radius: 8px;
+    cursor: grab;
+    user-select: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.page-component-card:active {
+    cursor: grabbing;
+}
+
+.page-component-card.dragging {
+    opacity: 0.4;
+    border: 2px dashed #3b82f6;
+}
+
+.card-top-row {
+	display: flex; 
+	justify-content: space-between; 
+	align-items: center;
+}
+
+.card-top-info {
+	display: flex; 
+	justify-content: space-between; 
+	align-items: center;
+	gap:15px;
+}
+
+.component-template-text {
+	display: flex;
+	gap : 15px
+}

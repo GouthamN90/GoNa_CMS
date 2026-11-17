@@ -17,6 +17,8 @@ public class GoNaConstants {
 	
 	public static final String CMSCOMPONENT_LISTING_PAGE = "cmscomponent-listing-page";
 	
+	public static final String CMSCOMPONENT_ASSIGN_SEARCH_PAGE = "pg-comp-assign-search";
+	
 	public static final String COMPONENT_PAGE_ASSGN_PAGE = "component-page-assignment-page";
 	
 	public static final String IMAGE_UPLOAD_FOLDER = "src/main/resources/static/images/";
