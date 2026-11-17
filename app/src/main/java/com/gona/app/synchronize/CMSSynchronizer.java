@@ -1,5 +1,6 @@
 package com.gona.app.synchronize;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -37,7 +38,7 @@ public class CMSSynchronizer {
 		onlinePage.setTitle(draftPage.getTitle());
 		onlinePage.setApprovalStatus(draftPage.getApprovalStatus());
 		onlinePage.setMetadata(draftPage.getMetadata());
-		onlinePage.setComponents(Collections.emptyList());
+		onlinePage.getComponents().clear();
 		if (CollectionUtils.isNotEmpty(draftPage.getComponents())) {
 			draftPage.getComponents().forEach(component -> {
 				final CMSComponent onlineComponent = synchronizePageComponent(component);
@@ -56,7 +57,7 @@ public class CMSSynchronizer {
 			entityManager.detach(onlineComponent);
 			onlineComponent.setId(null);
 			onlineComponent.setVersion(CMSVersion.Online);
-			onlineComponent.setPages(Collections.emptyList());
+			onlineComponent.setPages(new ArrayList<>());
 			cmsComponentRepository.save(onlineComponent);
 		}
 		return onlineComponent;

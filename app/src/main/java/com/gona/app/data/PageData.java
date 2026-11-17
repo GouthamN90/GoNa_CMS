@@ -23,6 +23,8 @@ public class PageData {
 	
 	private CMSVersion version;
 	
+	private Long draftVersionId;
+	
 	public Long getId() {
 		return id;
 	}
@@ -86,5 +88,12 @@ public class PageData {
 	public void setVersion(CMSVersion version) {
 		this.version = version;
 	}
-	
+
+	public Long getDraftVersionId() {
+		return draftVersionId;
+	}
+
+	public void setDraftVersionId(Long draftVersionId) {
+		this.draftVersionId = draftVersionId;
+	}
 }

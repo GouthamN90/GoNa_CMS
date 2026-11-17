@@ -7,6 +7,7 @@
 <script defer src="<c:url value='/js/cmspage_detail.js' />"></script>
 
 <c:set var="editUrl" value="${pageContext.request.contextPath}/edit_page/${pageData.id}" />
+<c:set var="viewDraftUrl" value="${pageContext.request.contextPath}/bopage_detail/${pageData.draftVersionId}" />
 <c:set var="deleteUrl" value="${pageContext.request.contextPath}/delete_page/${pageData.id}" />
 <c:set var="syncUrl" value="${pageContext.request.contextPath}/sync_page/${pageData.uid}" />
 
@@ -20,6 +21,9 @@
         	<c:if test="${pageData.version == 'Draft'}">
 	            <a href="${editUrl}" class="btn-edit-info">Edit Info</a>
 	            <a href="${syncUrl}" class="btn-sync">Synchronize</a>
+            </c:if>
+            <c:if test="${pageData.version == 'Online'}">
+            	<a href="${viewDraftUrl}" class="btn-edit-info">View Draft Version</a>
             </c:if>
             <button class="btn-delete" onclick="deletePageModal()">Delete</button>
         </div>

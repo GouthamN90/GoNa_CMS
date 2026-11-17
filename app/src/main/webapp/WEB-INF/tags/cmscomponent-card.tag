@@ -8,6 +8,7 @@
 <%@ attribute name="itemId" type="java.lang.String" required="true" rtexprvalue="true" description="Target URL for the Create button" %>
 <%@ attribute name="version" type="java.lang.String" required="false" rtexprvalue="true" description="Version of the component" %>
 <%@ attribute name="status" type="java.lang.String" required="false" rtexprvalue="true" description="Status of the component" %>
+<%@ attribute name="page" type="java.lang.String" required="false" rtexprvalue="true" description="Status of the component" %>
 
 <!-- Externalized Component Card Stylesheet -->
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/component_card.css' />" />
@@ -72,6 +73,11 @@
 			<c:when test="${defaultTemplateListFlag == true}">
 				<a href="javascript:void(0)" onclick="openComponentModal(${itemId})" class="component-create-btn">
 		            Create ${template }
+		        </a>
+			</c:when>
+			<c:when test="${page == 'AssignPage' }">
+				<a href="<c:url value='/add_component_to_page/${pageId}/${itemId}' />" class="component-create-btn">
+		            Add to Page
 		        </a>
 			</c:when>
 			<c:otherwise>
