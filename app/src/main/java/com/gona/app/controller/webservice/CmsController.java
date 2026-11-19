@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gona.app.facade.CMSComponentFacade;
 import com.gona.app.facade.CMSPageFacade;
+import com.gona.app.model.CMSVersion;
+
+import io.micrometer.common.util.StringUtils;
+
 import com.gona.app.data.PageData;
 
 @Controller
@@ -30,13 +34,32 @@ public class CmsController {
 			pageData = cmsPageFacade.getPageData("404page");
 		}
 		return pageData;
-		
+	}
+	
+	@GetMapping("/preview-page/{uid}/{version}")
+    @ResponseBody
+    public PageData getPagePreviewModeData(@PathVariable("uid") String uid,
+    		@PathVariable("version") String version) {
+		final CMSVersion cmsVersion = StringUtils.isNotBlank(version) ? Enum.valueOf(CMSVersion.class, version) : CMSVersion.Draft;
+		PageData pageData = cmsPageFacade.getPageDataPreviewMode(uid, cmsVersion);
+		if (pageData == null) {
+			pageData = cmsPageFacade.getPageDataPreviewMode("404page", cmsVersion);
+		}
+		return pageData;
 	}
 	
 	@GetMapping("/component/{uid}")
     @ResponseBody
     public String getComponentData(@PathVariable("uid") String uid) {
 		return cmsComponentFacade.getComponentData(uid);
+	}
+	
+	@GetMapping("/preview-component/{uid}/{version}")
+    @ResponseBody
+    public String getComponentPreviewModeData(@PathVariable("uid") String uid,
+    		@PathVariable("version") String version) {
+		final CMSVersion cmsVersion = StringUtils.isNotBlank(version) ? Enum.valueOf(CMSVersion.class, version) : CMSVersion.Draft;
+		return cmsComponentFacade.getComponentPreviewModeData(uid, cmsVersion);
 	}
 
 }

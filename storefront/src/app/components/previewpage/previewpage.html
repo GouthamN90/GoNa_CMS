@@ -1,1 +1,3 @@
-<p>previewpage works!</p>
+@for (selectedComponent of components; track selectedComponent) {
+    <ng-container *ngComponentOutlet="selectedComponent.template; inputs : {componentUid : selectedComponent.uid, componentName : selectedComponent.name, previewMode : true, version : selectedComponent.version}" ></ng-container>
+}

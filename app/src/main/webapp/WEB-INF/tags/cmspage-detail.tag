@@ -10,6 +10,7 @@
 <c:set var="viewDraftUrl" value="${pageContext.request.contextPath}/bopage_detail/${pageData.draftVersionId}" />
 <c:set var="deleteUrl" value="${pageContext.request.contextPath}/delete_page/${pageData.id}" />
 <c:set var="syncUrl" value="${pageContext.request.contextPath}/sync_page/${pageData.uid}" />
+<c:set var="previewUrl" value="${storefrontUrl}/preview-page?pageUid=${pageData.uid}&version=${pageData.version}"/>
 
 <tag:alertmessage-container successMessage="${successMessage}" errorMessage="${errorMessage}" />
 
@@ -18,6 +19,7 @@
     <div class="bopage-card-header">
         <h1 class="bopage-title"><c:out value="${pageData.name}" /></h1>
         <div class="bopage-actions">
+        	<a href="${previewUrl}" target="_blank" class="btn-sync">Preview</a>
         	<c:if test="${pageData.version == 'Draft'}">
 	            <a href="${editUrl}" class="btn-edit-info">Edit Info</a>
 	            <a href="${syncUrl}" class="btn-sync">Synchronize</a>

@@ -36,10 +36,12 @@ public interface CMSComponentRepository extends JpaRepository<CMSComponent, Long
 
 	Optional<CMSComponent> findByIdAndDefaultTemplate(final Long id, final boolean defaultTemplate);
 
-	Optional<CMSComponent> findByUidAndDefaultTemplateAndApprovalStatus(final String uid,
+	Optional<CMSComponent> findByUidAndVersionAndDefaultTemplateAndApprovalStatus(final String uid, final CMSVersion version,
 			final boolean defaultTemplate, final ApprovalStatus status);
 
 	CMSComponent findByUidAndVersion(String uid, CMSVersion version);
 	
 	List<CMSComponent> findByUid(String uid);
+
+	Optional<CMSComponent> findByUidAndVersionAndApprovalStatusIn(String uid, CMSVersion version, List<ApprovalStatus> statuses);
 }

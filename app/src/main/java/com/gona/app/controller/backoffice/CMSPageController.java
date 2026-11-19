@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +34,9 @@ public class CMSPageController {
 	
 	@Autowired
 	private CMSPageFacade cmsPageFacade;
+	
+	@Value("${storefront.url}") 
+	private String storefrontUrl;
 	
 	@GetMapping("/new_page")
 	public String createNewPage(Model model) {
@@ -120,6 +124,7 @@ public class CMSPageController {
 			model.addAttribute("errorMessage", "Page not found");
 			return GoNaConstants.ERROR_404_PAGE;
 		}
+		model.addAttribute("storefrontUrl", storefrontUrl);
 		model.addAttribute("pageData", pageData);
         return GoNaConstants.BOPAGEDETAIL_PAGE;
 	}

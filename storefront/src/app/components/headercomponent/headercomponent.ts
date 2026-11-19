@@ -33,6 +33,8 @@ export class Headercomponent {
 
   @Input() componentUid : string = '';
   @Input() componentName : string = '';
+  @Input() previewMode : boolean = false;
+  @Input() version : string = 'Online';
 
   private componentService = inject(ComponentService);
   private cdr = inject(ChangeDetectorRef);
@@ -41,7 +43,7 @@ export class Headercomponent {
 
   ngOnInit() {
     console.log(this.componentUid);
-    this.componentService.getComponentInfo(this.componentUid).subscribe({
+    this.componentService.getComponentInfo(this.componentUid, this.previewMode, this.version).subscribe({
       next:(result) => {
         this.imageUrl = result.imageUrl;
         this.tagline = result.tagLine;

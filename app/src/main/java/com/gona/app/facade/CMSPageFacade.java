@@ -163,8 +163,8 @@ public class CMSPageFacade {
 		return null;
 	}
 	
-	public PageData getPageDataPreviewMode(final String uid) {
-		final Optional<CMSPage> pageOpt = cmsPageService.getPageForUidAndVersion(uid, CMSVersion.Draft);
+	public PageData getPageDataPreviewMode(final String uid, final CMSVersion version) {
+		final Optional<CMSPage> pageOpt = cmsPageService.getPageForUidAndVersion(uid, version);
 		if (pageOpt.isPresent()) {
 			return cmsPagePopulator.populate(pageOpt.get());
 		}

@@ -68,9 +68,14 @@ public class CMSComponentService {
 		return null;
 	}
 	
-	public CMSComponent getComponentForUidAndApprovalStatus(final String uid, final boolean defaultTemplate,
+	public CMSComponent getComponentForUidVersionAndApprovalStatus(final String uid, final CMSVersion version, final boolean defaultTemplate,
 			final ApprovalStatus status) {
-		final Optional<CMSComponent> componentOpt = cmsComponentRepository.findByUidAndDefaultTemplateAndApprovalStatus(uid, defaultTemplate, status);
+		final Optional<CMSComponent> componentOpt = cmsComponentRepository.findByUidAndVersionAndDefaultTemplateAndApprovalStatus(uid, version, defaultTemplate, status);
+		return componentOpt.orElse(null);
+	}
+	
+	public CMSComponent getComponentForUidVersionAndApprovalStatus(final String uid, final CMSVersion version, final List<ApprovalStatus> statuses) {
+		final Optional<CMSComponent> componentOpt = cmsComponentRepository.findByUidAndVersionAndApprovalStatusIn(uid, version, statuses);
 		return componentOpt.orElse(null);
 	}
 

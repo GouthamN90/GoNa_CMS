@@ -8,12 +8,11 @@ export class ComponentService {
 
     private http = inject(HttpClient);
 
-    getComponentInfo(uid: string): Observable<any> {
+    getComponentInfo(uid: string, previewMode: boolean, version: string): Observable<any> {
+        if (previewMode) {
+            return this.http.get<any>(`${environment.apiUrl}/preview-component/${uid}/${version}`);
+        }
         return this.http.get<any>(`${environment.apiUrl}/component/${uid}`);
-    }
-
-    getComponentInfoPreviewMode(uid: string): Observable<any> {
-        return this.http.get<any>(`${environment.apiUrl}/preview-component/${uid}`);
     }
 
 }

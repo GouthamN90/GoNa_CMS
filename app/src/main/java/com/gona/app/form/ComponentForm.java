@@ -18,8 +18,6 @@ public class ComponentForm {
 
     private ApprovalStatus approvalStatus;
     
-    private String screenshotString;
-
 	public Long getId() {
 		return id;
 	}
@@ -76,12 +74,4 @@ public class ComponentForm {
 		this.approvalStatus = approvalStatus;
 	}
 
-	public String getScreenshotString() {
-		return screenshotString;
-	}
-
-	public void setScreenshotString(String screenshotString) {
-		this.screenshotString = screenshotString;
-	}
-    
 }
