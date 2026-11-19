@@ -8,7 +8,6 @@
     <form:form action="${pageContext.request.contextPath}/save_component" modelAttribute="componentForm" method="post">
         <form:hidden path="id" value='${componentForm.id }'/>
         <form:hidden path="template" value='${componentForm.template }' />
-        <form:hidden path="screenshotString" value='${componentForm.screenshotString }'/>
 
         <div class="component-form-grid">
             <!-- Banner Image Url -->

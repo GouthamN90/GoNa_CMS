@@ -1,5 +1,3 @@
-
-
 @for (selectedComponent of components; track selectedComponent) {
     <ng-container *ngComponentOutlet="selectedComponent.template; inputs : {componentUid : selectedComponent.uid, componentName : selectedComponent.name}" ></ng-container>
 }

@@ -24,8 +24,8 @@ export class PageService {
         return this.http.get<PageData>(`${environment.apiUrl}/page/${uid}`);
     }
 
-    getPageInfoPreviewMode(uid: string): Observable<PageData> {
-        return this.http.get<PageData>(`${environment.apiUrl}/preview-page/${uid}`);
+    getPageInfoPreviewMode(uid: string, version : string): Observable<PageData> {
+        return this.http.get<PageData>(`${environment.apiUrl}/preview-page/${uid}/${version}`);
     }
 
 }

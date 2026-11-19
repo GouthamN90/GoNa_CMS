@@ -28,7 +28,9 @@ import com.gona.app.data.SortBy;
 import com.gona.app.data.SortOrder;
 import com.gona.app.form.CloneComponentForm;
 import com.gona.app.form.ComponentForm;
+import com.gona.app.form.PreviewImageForm;
 import com.gona.app.model.ApprovalStatus;
+import com.gona.app.model.CMSVersion;
 import com.gona.app.model.cms.CMSComponent;
 import com.gona.app.model.cms.CMSPage;
 import com.gona.app.populator.CMSComponentPopulator;
@@ -110,12 +112,11 @@ public class CMSComponentFacade {
 		
 	}
 
-	public boolean saveComponent(ComponentForm form) {
+	public boolean saveComponent(final ComponentForm form) {
 		Optional<CMSComponent> componentOpt = cmsComponentService.getByIdAndDefaultTemplate(form.getId(), false);
 		if (componentOpt.isPresent()) {
 			CMSComponent component = componentOpt.get();
 			delegateComponentFormPopulator.getPopulator(component.getTemplate()).populate(form, component);
-			savePreviewImage(form, component);
 			cmsComponentService.saveComponent(component);
 			
 			return true;
@@ -123,7 +124,7 @@ public class CMSComponentFacade {
 		return false;
 	}
 
-	private void savePreviewImage(ComponentForm form, CMSComponent component) {
+	private void savePreviewImage(PreviewImageForm form, CMSComponent component) {
 		if (StringUtils.isNotBlank(form.getScreenshotString())) {
 			String base64Image = form.getScreenshotString().split(",")[1];
 			if (StringUtils.isNotBlank(base64Image)) {
@@ -150,8 +151,24 @@ public class CMSComponentFacade {
 		
 	}
 	
+	public void savePreviewImage(PreviewImageForm form) {
+		Optional<CMSComponent> componentOpt = cmsComponentService.getByIdAndDefaultTemplate(form.getId(), false);
+		if (componentOpt.isPresent()) {
+			CMSComponent component = componentOpt.get();
+			savePreviewImage(form, component);
+			cmsComponentService.saveComponent(component);
+		}
+		
+	}
+	
 	public String getComponentData(final String uid) {
-		final CMSComponent component = cmsComponentService.getComponentForUidAndApprovalStatus(uid, false, ApprovalStatus.Show);
+		final CMSComponent component = cmsComponentService.getComponentForUidVersionAndApprovalStatus(uid, CMSVersion.Online, false, ApprovalStatus.Show);
+		return convertComponentToJsonData(component);
+	}
+	
+	public String getComponentPreviewModeData(final String uid, final CMSVersion version) {
+		final CMSComponent component = cmsComponentService.getComponentForUidVersionAndApprovalStatus(
+				uid, version, List.of(ApprovalStatus.Show, ApprovalStatus.PendingApproval));
 		return convertComponentToJsonData(component);
 	}
 	

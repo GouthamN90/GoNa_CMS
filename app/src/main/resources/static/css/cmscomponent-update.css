@@ -156,3 +156,10 @@
 .btn-delete:hover {
     background-color: #C62828;
 }
+
+.preview-iframe {
+	width: 100%;
+	height: 80vh;
+	border: 1px solid #ccc;
+	border-radius: 6px
+}

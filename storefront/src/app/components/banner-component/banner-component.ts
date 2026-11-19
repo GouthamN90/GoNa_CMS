@@ -17,13 +17,15 @@ export class BannerComponent implements OnInit {
 
   @Input() componentUid : string = '';
   @Input() componentName : string = '';
+  @Input() previewMode : boolean = false;
+  @Input() version : string = 'Online';
 
   private componentService = inject(ComponentService);
   private cdr = inject(ChangeDetectorRef);
 
   //TODO try this call in ngAfterContentInit()
   ngOnInit() {
-    this.componentService.getComponentInfo(this.componentUid).subscribe({
+    this.componentService.getComponentInfo(this.componentUid, this.previewMode, this.version).subscribe({
       next:(result) => {
         // TODO if result is empty decide what needs to be shown
         this.imageUrl = result.imageUrl;

@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,13 +13,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gona.app.facade.CMSComponentFacade;
 import com.gona.app.constant.GoNaConstants;
-import com.gona.app.data.ComponentData;
 import com.gona.app.data.ComponentTemplate;
 import com.gona.app.data.EditComponentData;
 import com.gona.app.data.PageableComponentData;
@@ -26,6 +28,7 @@ import com.gona.app.data.SortOrder;
 import com.gona.app.form.BannerComponentForm;
 import com.gona.app.form.CloneComponentForm;
 import com.gona.app.form.ComponentForm;
+import com.gona.app.form.PreviewImageForm;
 import com.gona.app.model.ApprovalStatus;
 import com.gona.app.model.CMSVersion;
 
@@ -36,6 +39,9 @@ public class CMSComponentController {
 	
 	@Autowired
 	private CMSComponentFacade cmsComponentFacade;
+	
+	@Value("${storefront.url}") 
+	private String storefrontUrl;
 	
 	@GetMapping("/select_default_component")
 	public String viewDefaultComponents(Model model, @RequestParam(defaultValue = "0") int pageNum,
@@ -108,7 +114,7 @@ public class CMSComponentController {
         		redirectAttributes.addFlashAttribute("errorMessage", "Failed to create component");
 				return "redirect:/select_default_component";
         	}
-            redirectAttributes.addFlashAttribute("successMessage", "Created " + form.getNewCompName() + "!");
+            redirectAttributes.addFlashAttribute("successMessage", "Created " + form.getNewCompName());
             return "redirect:/update_component/" + newCompId;
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "An error occurred while saving the component: " + e.getMessage());
@@ -128,6 +134,7 @@ public class CMSComponentController {
 		model.addAttribute("componentForm", editComponentData.getComponentForm());
 		model.addAttribute("componentFormPage", GoNaConstants.COMPONENT_TEMPLATE_FORM_MAP.get(editComponentData.getTemplate()));
 		model.addAttribute("approvalStatuses", ApprovalStatus.values());
+		model.addAttribute("storefrontUrl", storefrontUrl);
 		return GoNaConstants.CMSCOMPONENT_FORM_PAGE;
 	}
 	
@@ -144,11 +151,19 @@ public class CMSComponentController {
 			RedirectAttributes redirectAttributes) {
 		final boolean success = cmsComponentFacade.saveComponent(componentForm);
 		if (success) {
+			redirectAttributes.addFlashAttribute("capturePreview", true);
 			redirectAttributes.addFlashAttribute("successMessage", "Component saved successfully.");
 		} else {
 			redirectAttributes.addFlashAttribute("errorMessage", "Failed to save component.");
 		}
 		return "redirect:/update_component/" + componentForm.getId();
+	}
+	
+	@PostMapping("/save_previewimage")
+	@ResponseBody
+	public ResponseEntity<Void> savePreviewImage(@RequestBody PreviewImageForm form) {
+		cmsComponentFacade.savePreviewImage(form);
+		return ResponseEntity.ok().build();
 	}
 	
 	@GetMapping("/sync_component/{uid}")
