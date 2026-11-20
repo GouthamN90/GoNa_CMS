@@ -131,7 +131,7 @@ public class CMSComponentFacade {
 				byte[] imageBytes = Base64.getDecoder().decode(base64Image);
 
 	            // Define target storage path
-	            String fileName = component.getUid() + ".png";
+	            String fileName = component.getUid() + component.getVersion().toString() + ".png";
 	            Path uploadPath = Paths.get(GoNaConstants.IMAGE_UPLOAD_FOLDER);
 	            
 	            try {
@@ -152,9 +152,9 @@ public class CMSComponentFacade {
 	}
 	
 	public void savePreviewImage(PreviewImageForm form) {
-		Optional<CMSComponent> componentOpt = cmsComponentService.getByIdAndDefaultTemplate(form.getId(), false);
-		if (componentOpt.isPresent()) {
-			CMSComponent component = componentOpt.get();
+		final CMSVersion version = StringUtils.isNotBlank(form.getVersion()) ? Enum.valueOf(CMSVersion.class, form.getVersion()) : CMSVersion.Draft;
+		final CMSComponent component = cmsComponentService.getComponentForUidAndVersion(form.getUid(), version);
+		if (component != null) {
 			savePreviewImage(form, component);
 			cmsComponentService.saveComponent(component);
 		}

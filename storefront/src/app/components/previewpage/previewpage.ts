@@ -1,8 +1,10 @@
-import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject, ElementRef, ViewChild } from '@angular/core';
 import { COMPONENT_MAP } from '../../components/componentmapper';
 import { NgComponentOutlet } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { PageService, PageData } from '../../services/page';
+import html2canvas from 'html2canvas';
+import { ComponentService } from '../../services/component-service';
 
 @Component({
   imports: [NgComponentOutlet],
@@ -11,9 +13,12 @@ import { PageService, PageData } from '../../services/page';
   templateUrl: './previewpage.html',
 })
 export class PreviewPage implements OnInit {
+
   private route = inject(ActivatedRoute);
   private pageService = inject(PageService);
   private changeDetector = inject(ChangeDetectorRef);
+  private componentService = inject(ComponentService);
+
 
   pageUid: string | null = null;
   componentUid: string | null = null;
@@ -24,8 +29,13 @@ export class PreviewPage implements OnInit {
   
   components: any[] = [{}];
 
-  currentUrl : string = '';
+  showPageCaptureButton = false;
+  isSavingPreview = false;
+  previewMessage = '';
+  previewSaveFailed = false;
 
+  @ViewChild('captureArea')
+  private captureArea!: ElementRef<HTMLElement>;
 
 
   ngOnInit(): void {
@@ -47,6 +57,7 @@ export class PreviewPage implements OnInit {
           template : COMPONENT_MAP[this.componentTemplate],
           version : this.version
         }]
+        this.showPageCaptureButton = true;
       }
 
       if (this.pageUid != null) {
@@ -68,6 +79,41 @@ export class PreviewPage implements OnInit {
           }
         });
       }
+    });
+  }
+
+  async captureAndSend(): Promise<void> {
+
+    this.isSavingPreview = true;
+    this.previewMessage = '';
+
+    const canvas = await html2canvas(this.captureArea.nativeElement, {
+      useCORS: true,
+      scale: 1
+    });
+
+    const screenshotString = canvas.toDataURL('image/png');
+    const compUid = this.componentUid;
+    const version = this.version;
+    if (compUid === null || version === null) {
+      return;
+    }
+
+    this.componentService.savePreviewImage(compUid, version, screenshotString).subscribe({
+      next: () => { 
+        console.log('POST succeeded; response:');
+        this.previewMessage = 'Preview image saved successfully.';
+        this.previewSaveFailed = false;
+        this.isSavingPreview = false;
+        this.changeDetector.markForCheck();
+       },
+      error: (error) => { 
+        console.error('Failed to save preview image', error);
+        this.previewMessage = 'Could not save the preview image.';
+        this.previewSaveFailed = true;
+        this.isSavingPreview = false;
+        this.changeDetector.markForCheck();
+       }
     });
   }
 }

@@ -1,7 +1,6 @@
 <%@ tag language="java" pageEncoding="UTF-8" description="GoNa Backoffice Update CMSComponent" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tag" tagdir="/WEB-INF/tags" %>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.min.js"></script>
 
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/cmscomponent-update.css' />" />
 <script defer src="<c:url value='/js/cmscomponent-update.js' />"></script>
@@ -16,10 +15,10 @@
 	<div class="component-title-row">
        <h1 class="component-name">${editComponentData.name}</h1>
        <div class="cmscomponent-actions">
-       		<a href="${previewUrl}" target="_blank" class="btn-sync">Preview</a>
+       		<a href="${previewUrl}" target="_blank" class="btn">Preview</a>
 	       <c:if test="${editComponentData.version == 'Draft'}">
-	            <a onclick="editComponentModal()" class="btn-edit-info">Edit Info</a>
-	            <a href="${syncUrl}" class="btn-sync">Synchronize</a>
+	            <a onclick="editComponentModal()" class="btn">Edit Info</a>
+	            <a href="${syncUrl}" class="btn">Synchronize</a>
            </c:if>
            <button class="btn-delete" onclick="deleteComponentModal()">Delete</button>
        </div>
@@ -64,9 +63,9 @@
 	</div>
 </div>
 	
-<div id="captureSection" class="component-details-wrapper" data-docapture="${capturePreview}" data-compid="${editComponentData.id}" data-compuid="${editComponentData.uid}">
-	<iframe id="captureIframe" src="${storefrontUrl}/preview-page?componentUid=${editComponentData.uid}&componentTemplate=${editComponentData.template}&version=${editComponentData.version}"
-		class="preview-iframe"></iframe>
+<div id="captureSection" class="component-details-wrapper">
+	<iframe src="${storefrontUrl}/preview-page?componentUid=${editComponentData.uid}&componentTemplate=${editComponentData.template}&version=${editComponentData.version}"
+		></iframe>
 </div>
 	
 <div id="editComponentModal" class="modal-overlay">

@@ -5,6 +5,8 @@ import java.util.Map;
 public class GoNaConstants {
 	
 	public static final String ERROR_404_PAGE = "error-404-page";
+	public static final String HOMEPAGE_UID = "homepage";
+	public static final String PAGE404_UID = "404page";
 	
 	public static final String DASHBOARD_PAGE = "dashboard-page";
 	public static final String CMSPAGE_CREATE_EDIT_PAGE = "cmspage-form-page";

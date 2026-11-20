@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -151,7 +152,6 @@ public class CMSComponentController {
 			RedirectAttributes redirectAttributes) {
 		final boolean success = cmsComponentFacade.saveComponent(componentForm);
 		if (success) {
-			redirectAttributes.addFlashAttribute("capturePreview", true);
 			redirectAttributes.addFlashAttribute("successMessage", "Component saved successfully.");
 		} else {
 			redirectAttributes.addFlashAttribute("errorMessage", "Failed to save component.");
@@ -161,6 +161,7 @@ public class CMSComponentController {
 	
 	@PostMapping("/save_previewimage")
 	@ResponseBody
+	@CrossOrigin(origins = "http://localhost:4200")
 	public ResponseEntity<Void> savePreviewImage(@RequestBody PreviewImageForm form) {
 		cmsComponentFacade.savePreviewImage(form);
 		return ResponseEntity.ok().build();

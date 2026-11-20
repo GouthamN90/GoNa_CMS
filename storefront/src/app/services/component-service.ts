@@ -15,4 +15,16 @@ export class ComponentService {
         return this.http.get<any>(`${environment.apiUrl}/component/${uid}`);
     }
 
+    savePreviewImage(uid: string, version: string, screenshotString: string): Observable<any> {
+
+        const request = {
+            uid: uid,            
+            version: version,           
+            screenshotString: screenshotString
+        };
+
+        return this.http.post<any>(`${environment.apiUrl}/save_previewimage`, request);
+
+    }
+
 }

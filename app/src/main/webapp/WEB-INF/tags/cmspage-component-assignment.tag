@@ -78,7 +78,7 @@
 				            <c:if test="${pageData.version == 'Draft'}">
 				            <div class="component-card-actions">
 	                            <a href="<c:url value='/remove_component_from_page/${pageData.id}/${component.id}' />" class="a-btn-delete">Remove</a>
-	                            <a href="<c:url value='/update_component/${component.id}' />" class="btn-edit-info">Edit</a>
+	                            <a href="<c:url value='/update_component/${component.id}' />" class="btn">Edit</a>
 	                        </div>
 	                        </c:if>
 	                    </div>

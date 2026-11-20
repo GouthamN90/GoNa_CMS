@@ -1,3 +1,20 @@
+
+@if (previewMessage) {
+  <p role="status" [class.error]="previewSaveFailed" class="notification">
+    {{ previewMessage }}
+  </p>
+}
+
+<div #captureArea>
 @for (selectedComponent of components; track selectedComponent) {
     <ng-container *ngComponentOutlet="selectedComponent.template; inputs : {componentUid : selectedComponent.uid, componentName : selectedComponent.name, previewMode : true, version : selectedComponent.version}" ></ng-container>
 }
+</div>
+
+<div class="captureBtn">
+@if (showPageCaptureButton) {
+  <button type="button" class="btn" (click)="captureAndSend()"[disabled]="isSavingPreview">
+    {{ isSavingPreview ? 'Saving…' : 'Capture Preview Image' }}
+  </button>
+}
+</div>
