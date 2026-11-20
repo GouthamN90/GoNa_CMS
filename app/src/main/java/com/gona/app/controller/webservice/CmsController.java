@@ -13,6 +13,7 @@ import com.gona.app.model.CMSVersion;
 
 import io.micrometer.common.util.StringUtils;
 
+import com.gona.app.constant.GoNaConstants;
 import com.gona.app.data.PageData;
 
 @Controller
@@ -31,7 +32,7 @@ public class CmsController {
     public PageData getPageData(@PathVariable("uid") String uid) {
 		PageData pageData = cmsPageFacade.getPageData(uid);
 		if (pageData == null) {
-			pageData = cmsPageFacade.getPageData("404page");
+			pageData = cmsPageFacade.getPageData(GoNaConstants.PAGE404_UID);
 		}
 		return pageData;
 	}
@@ -43,7 +44,7 @@ public class CmsController {
 		final CMSVersion cmsVersion = StringUtils.isNotBlank(version) ? Enum.valueOf(CMSVersion.class, version) : CMSVersion.Draft;
 		PageData pageData = cmsPageFacade.getPageDataPreviewMode(uid, cmsVersion);
 		if (pageData == null) {
-			pageData = cmsPageFacade.getPageDataPreviewMode("404page", cmsVersion);
+			pageData = cmsPageFacade.getPageDataPreviewMode(GoNaConstants.PAGE404_UID, cmsVersion);
 		}
 		return pageData;
 	}

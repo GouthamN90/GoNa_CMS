@@ -19,13 +19,13 @@
     <div class="bopage-card-header">
         <h1 class="bopage-title"><c:out value="${pageData.name}" /></h1>
         <div class="bopage-actions">
-        	<a href="${previewUrl}" target="_blank" class="btn-sync">Preview</a>
+        	<a href="${previewUrl}" target="_blank" class="btn">Preview</a>
         	<c:if test="${pageData.version == 'Draft'}">
-	            <a href="${editUrl}" class="btn-edit-info">Edit Info</a>
-	            <a href="${syncUrl}" class="btn-sync">Synchronize</a>
+	            <a href="${editUrl}" class="btn">Edit Info</a>
+	            <a href="${syncUrl}" class="btn">Synchronize</a>
             </c:if>
             <c:if test="${pageData.version == 'Online'}">
-            	<a href="${viewDraftUrl}" class="btn-edit-info">View Draft Version</a>
+            	<a href="${viewDraftUrl}" class="btn">View Draft Version</a>
             </c:if>
             <button class="btn-delete" onclick="deletePageModal()">Delete</button>
         </div>

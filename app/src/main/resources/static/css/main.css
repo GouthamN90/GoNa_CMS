@@ -155,3 +155,20 @@ h1 {
     background-color: #bb2d3b;
     color: #ffffff;
 }
+
+.btn {
+    background-color: #f3f4f6;
+    color: #4b5563;
+    border: 1px solid #d1d5db;
+    padding: 8px 18px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+    text-decoration: none;
+}
+
+.btn:hover {
+	background-color: #dbdcde;
+}

@@ -78,6 +78,10 @@ public class CMSComponentService {
 		final Optional<CMSComponent> componentOpt = cmsComponentRepository.findByUidAndVersionAndApprovalStatusIn(uid, version, statuses);
 		return componentOpt.orElse(null);
 	}
+	
+	public CMSComponent getComponentForUidAndVersion(final String uid, final CMSVersion version) {
+		return cmsComponentRepository.findByUidAndVersion(uid, version);
+	}
 
 	public Long syncComponent(String uid) {
 		List<CMSComponent> components = cmsComponentRepository.findByUid(uid);

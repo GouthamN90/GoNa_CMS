@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.gona.app.constant.GoNaConstants;
 import com.gona.app.model.ApprovalStatus;
 import com.gona.app.model.CMSVersion;
 import com.gona.app.model.cms.CMSComponent;
@@ -81,6 +82,9 @@ public class CMSPageService {
 	public void deletePage(Long id) {
 		CMSPage page = cmsPageRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Page not found"));
+		if (GoNaConstants.HOMEPAGE_UID.equals(page.getUid()) || GoNaConstants.PAGE404_UID.equals(page.getUid())) {
+			throw new IllegalArgumentException("Homepage/404 page cannot be deleted");
+		}
 		if (page.getVersion().equals(CMSVersion.Online)) {
 			cmsPageRepository.delete(page);
 		} else {
